@@ -19,7 +19,7 @@
 1.  **Clone repository**
 
     ```bash
-    git clone https://github.com/your-username/tailwind-css4-guide.git
+    git clone https://github.com/premix-labs/tailwind-css4-guide.git
     cd tailwind-css4-guide
     ```
 
