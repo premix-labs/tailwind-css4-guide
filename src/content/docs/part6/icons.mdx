@@ -1,0 +1,119 @@
+---
+title: Using Icons (astro-icon)
+description: วิธีใช้งาน Icons ยอดนิยม (Material, FontAwesome, etc.) ด้วย astro-icon
+---
+
+import { Icon } from "astro-icon/components";
+
+# Using Icons
+
+การใช้งาน Icons ในโปรเจกต์นี้เราจะใช้ **`astro-icon`** ซึ่งเป็นวิธีที่สะดวกและเร็วที่สุด สามารถดึง icon จาก **Iconify** (100,000+ icons) มาใช้ได้ทันทีโดยไม่ต้องโหลดไฟล์ SVG เอง
+
+---
+
+## 🚀 การติดตั้ง
+
+โปรเจกต์นี้ติดตั้ง `astro-icon` มาให้แล้ว หากต้องการติดตั้งเพิ่มในโปรเจกต์อื่น:
+
+```bash
+npm install astro-icon
+```
+
+---
+
+## 🛠 วิธีใช้งานพื้นฐาน
+
+นำเข้า component `Icon` และระบุชื่อ icon ที่ต้องการ (ดูชื่อได้ที่ [Iconify](https://icones.js.org/))
+
+```mdx
+import { Icon } from "astro-icon/components";
+
+<!-- Material Design Icon -->
+
+<Icon name="mdi:home" />
+
+<!-- Phosphor Icon -->
+
+<Icon name="ph:rocket-duotone" />
+
+<!-- Brand Logo -->
+
+<Icon name="simple-icons:github" />
+```
+
+### ตัวอย่างผลลัพธ์
+
+<div className="flex gap-4 p-4 bg-slate-100 dark:bg-slate-800 rounded-lg">
+  <Icon name="mdi:home" size="32" className="text-blue-500" />
+  <Icon name="ph:rocket-duotone" size="32" className="text-orange-500" />
+  <Icon
+    name="simple-icons:github"
+    size="32"
+    className="text-gray-900 dark:text-white"
+  />
+  <Icon name="logos:tailwindcss-icon" size="32" />
+</div>
+
+---
+
+## 🎨 การปรับแต่งด้วย Tailwind CSS
+
+ข้อดีของ `astro-icon` คือเราสามารถใช้ Tailwind utilities ปรับแต่งได้เหมือนกับ HTML element ทั่วไป
+
+### 1. เปลี่ยนสี (Color)
+
+ใช้ `text-{color}` ในการเปลี่ยนสี:
+
+```mdx
+<Icon name="mdi:heart" class="text-red-500" />
+<Icon name="mdi:check-circle" class="text-green-500" />
+```
+
+<div className="flex gap-4 my-4">
+  <Icon name="mdi:heart" size="48" className="text-red-500" />
+  <Icon name="mdi:check-circle" size="48" className="text-green-500" />
+</div>
+
+### 2. ปรับขนาด (Size)
+
+จะใช้ prop `size` หรือใช้ Tailwind `w-*` และ `h-*` ก็ได้:
+
+```mdx
+<!-- ใช้ prop size (pixel) -->
+
+<Icon name="mdi:user" size="48" />
+
+<!-- ใช้ Tailwind -->
+
+<Icon name="mdi:user" class="w-12 h-12" />
+<Icon name="mdi:user" class="w-24 h-24" />
+```
+
+### 3. ใส่ Animation
+
+```mdx
+<Icon name="mdi:loading" class="w-8 h-8 animate-spin text-blue-600" />
+<Icon name="mdi:bell" class="w-8 h-8 animate-bounce text-yellow-500" />
+```
+
+<div className="flex gap-4 my-4">
+  <Icon name="mdi:loading" className="w-8 h-8 animate-spin text-blue-600" />
+  <Icon name="mdi:bell" className="w-8 h-8 animate-bounce text-yellow-500" />
+</div>
+
+---
+
+## 📦 Icon Sets แนะนำ
+
+ชื่อ prefix ยอดนิยมที่ใช้บ่อย:
+
+| Prefix         | ชื่อชุด Icon          | สไตล์                                |
+| :------------- | :-------------------- | :----------------------------------- |
+| `mdi`          | Material Design Icons | Google Standard, ครบครัน             |
+| `ph`           | Phosphor Icons        | Modern, เส้นคมสวย                    |
+| `lucide`       | Lucide                | Clean, Minimal                       |
+| `heroicons`    | Heroicons             | โดยผู้สร้าง Tailwind CSS             |
+| `fa6-solid`    | FontAwesome 6         | ยอดนิยมตลอดกาล                       |
+| `simple-icons` | Simple Icons          | Brand Logos (GitHub, Facebook, etc.) |
+
+> **Tip:** ค้นหา Icon ทั้งหมดได้ที่ 👉 [icones.js.org](https://icones.js.org/)
