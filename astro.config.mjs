@@ -1,12 +1,9 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
-import starlight from '@astrojs/starlight';
-
 // https://astro.build/config
 export default defineConfig({
-	// TODO: Update site and base for GitHub Pages deployment
-	// site: 'https://username.github.io',
-	// base: '/tailwind-css4-guide',
+	site: 'https://premix-labs.github.io',
+	base: '/tailwind-css4-guide',
 	integrations: [
 		starlight({
 			title: 'Tailwind CSS 4 Guide',
