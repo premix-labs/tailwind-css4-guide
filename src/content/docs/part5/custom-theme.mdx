@@ -1,0 +1,168 @@
+---
+title: Custom Theme
+description: สร้าง Design System ด้วย @theme
+---
+
+# Custom Theme
+
+## @theme Block
+
+ใน Tailwind CSS 4 ใช้ `@theme` แทน `tailwind.config.js`:
+
+```css
+@import "tailwindcss";
+
+@theme {
+  /* Colors */
+  --color-primary: #3b82f6;
+  --color-primary-dark: #2563eb;
+  --color-secondary: #8b5cf6;
+
+  /* Brand colors with shades */
+  --color-brand-50: oklch(0.97 0.01 250);
+  --color-brand-100: oklch(0.93 0.03 250);
+  --color-brand-500: oklch(0.55 0.2 250);
+  --color-brand-900: oklch(0.25 0.1 250);
+
+  /* Fonts */
+  --font-family-display: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-family-body: "Noto Sans Thai", sans-serif;
+
+  /* Spacing */
+  --spacing-18: 4.5rem;
+  --spacing-88: 22rem;
+
+  /* Border radius */
+  --radius-4xl: 2rem;
+
+  /* Shadows */
+  --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.08);
+  --shadow-glow: 0 0 20px rgba(59, 130, 246, 0.5);
+
+  /* Animations */
+  --animate-fade-in: fade-in 0.5s ease-out;
+  --animate-slide-up: slide-up 0.3s ease-out;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+```
+
+---
+
+## การใช้งาน
+
+```html
+<div class="bg-primary text-white font-display shadow-soft rounded-4xl">
+  <h1 class="text-brand-500">Using custom theme</h1>
+  <p class="font-body">Body text with Thai font</p>
+</div>
+```
+
+---
+
+## OKLCH Colors (v4 Default)
+
+Tailwind CSS 4 ใช้ OKLCH color space เป็น default:
+
+```css
+@theme {
+  /* OKLCH format: oklch(lightness chroma hue) */
+  --color-accent: oklch(0.7 0.15 200);
+}
+```
+
+| Part      | Range  | Description      |
+| --------- | ------ | ---------------- |
+| Lightness | 0-1    | 0=black, 1=white |
+| Chroma    | 0-0.37 | ความเข้มของสี    |
+| Hue       | 0-360  | โทนสี (degrees)  |
+
+> **Tip:** OKLCH ให้ gradients และ dark mode ที่สวยกว่า RGB/HSL
+
+---
+
+## Extending Default Theme
+
+เพิ่มค่าใหม่โดยไม่ลบของเดิม:
+
+```css
+@theme {
+  /* เพิ่ม color ใหม่ (blue-50 ถึง blue-950 ยังใช้ได้) */
+  --color-blue-1000: #1e1b4b;
+
+  /* เพิ่ม breakpoint ใหม่ */
+  --breakpoint-3xl: 1920px;
+}
+```
+
+---
+
+## Removing Default Values
+
+ลบค่า default:
+
+```css
+@theme {
+  /* ลบทุก font families */
+  --font-family-*: initial;
+
+  /* กำหนดใหม่ */
+  --font-family-sans: "Inter", sans-serif;
+}
+```
+
+---
+
+## ตัวอย่าง Design System
+
+```css
+@import "tailwindcss";
+
+@theme {
+  /* === Brand === */
+  --color-brand: #6366f1;
+  --color-brand-light: #818cf8;
+  --color-brand-dark: #4f46e5;
+
+  /* === Semantic === */
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+
+  /* === Typography === */
+  --font-family-heading: "Outfit", sans-serif;
+  --font-family-body: "Inter", sans-serif;
+
+  /* === Components === */
+  --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --radius-card: 0.75rem;
+}
+```
+
+ใช้งาน:
+
+```html
+<div class="bg-white shadow-card rounded-card p-6">
+  <h2 class="font-heading text-brand text-2xl">Card Title</h2>
+  <p class="font-body text-gray-600">Card content</p>
+  <span class="text-success">✓ Success</span>
+</div>
+```

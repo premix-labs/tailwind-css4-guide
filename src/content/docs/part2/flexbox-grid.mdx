@@ -1,0 +1,170 @@
+---
+title: Flexbox & Grid
+description: การจัดเรียง elements ด้วย Flexbox และ CSS Grid
+---
+
+# Flexbox & Grid
+
+## แนวคิด
+
+**Flexbox** และ **Grid** คือ 2 เครื่องมือหลักสำหรับจัด layout:
+
+| Use Case                           | เลือกใช้ |
+| ---------------------------------- | -------- |
+| จัดเรียง 1 แถว/1 คอลัมน์           | Flexbox  |
+| จัดเรียง 2 มิติ (rows + columns)   | Grid     |
+| Component layout (buttons, navbar) | Flexbox  |
+| Page layout (sidebar + content)    | Grid     |
+
+> **Rule of thumb:** เริ่มจาก Flexbox → ถ้าซับซ้อนค่อยเปลี่ยนเป็น Grid
+
+---
+
+## Flexbox
+
+### พื้นฐาน
+
+```html
+<div class="flex justify-between items-center gap-4">
+  <div>Item 1</div>
+  <div>Item 2</div>
+</div>
+```
+
+### Flex Direction
+
+| Class              | Effect                |
+| ------------------ | --------------------- |
+| `flex-row`         | เรียงแนวนอน (default) |
+| `flex-col`         | เรียงแนวตั้ง          |
+| `flex-row-reverse` | เรียงแนวนอนกลับด้าน   |
+
+### Justify Content (แกนหลัก)
+
+| Class             | Effect           |
+| ----------------- | ---------------- |
+| `justify-start`   | ชิดซ้าย          |
+| `justify-center`  | กึ่งกลาง         |
+| `justify-end`     | ชิดขวา           |
+| `justify-between` | กระจายเท่ากัน    |
+| `justify-around`  | กระจาย + padding |
+
+### Align Items (แกนรอง)
+
+| Class           | Effect         |
+| --------------- | -------------- |
+| `items-start`   | ชิดบน          |
+| `items-center`  | กึ่งกลาง       |
+| `items-end`     | ชิดล่าง        |
+| `items-stretch` | ยืดเต็มความสูง |
+
+### Flex Wrap & Grow/Shrink
+
+```html
+<!-- Wrap เมื่อไม่พอ -->
+<div class="flex flex-wrap gap-4">...</div>
+
+<!-- Item ยืดได้ -->
+<div class="flex-grow">ยืดเต็มที่เหลือ</div>
+<div class="flex-shrink-0">ไม่หดตัว</div>
+<div class="flex-1">flex: 1 1 0%</div>
+```
+
+---
+
+## CSS Grid
+
+### พื้นฐาน
+
+```html
+<div class="grid grid-cols-3 gap-4">
+  <div>1</div>
+  <div>2</div>
+  <div>3</div>
+</div>
+```
+
+### Grid Columns
+
+| Class            | Effect     |
+| ---------------- | ---------- |
+| `grid-cols-1`    | 1 column   |
+| `grid-cols-2`    | 2 columns  |
+| `grid-cols-3`    | 3 columns  |
+| `grid-cols-12`   | 12 columns |
+| `grid-cols-none` | ไม่กำหนด   |
+
+### Responsive Grid (สำคัญ!)
+
+```html
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+  <!-- 1 col บนมือถือ, 2 col tablet, 4 col desktop -->
+</div>
+```
+
+### Column Span
+
+```html
+<div class="grid grid-cols-4 gap-4">
+  <div class="col-span-2">กว้าง 2 columns</div>
+  <div class="col-span-1">กว้าง 1 column</div>
+  <div class="col-span-1">กว้าง 1 column</div>
+</div>
+```
+
+### Gap
+
+| Class     | Effect         |
+| --------- | -------------- |
+| `gap-0`   | ไม่มีระยะห่าง  |
+| `gap-4`   | 1rem ทุกทิศ    |
+| `gap-x-4` | 1rem แนวนอน    |
+| `gap-y-2` | 0.5rem แนวตั้ง |
+
+---
+
+## ตัวอย่าง Practical
+
+### Navbar
+
+```html
+<nav class="flex items-center justify-between p-4 bg-white shadow">
+  <a href="/" class="font-bold text-xl">Logo</a>
+  <div class="hidden md:flex gap-6">
+    <a href="#" class="hover:text-blue-500">Home</a>
+    <a href="#" class="hover:text-blue-500">About</a>
+    <a href="#" class="hover:text-blue-500">Contact</a>
+  </div>
+  <button class="md:hidden">Menu</button>
+</nav>
+```
+
+### Card Grid
+
+```html
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+  <div class="bg-white p-6 rounded-lg shadow">Card 1</div>
+  <div class="bg-white p-6 rounded-lg shadow">Card 2</div>
+  <div class="bg-white p-6 rounded-lg shadow">Card 3</div>
+</div>
+```
+
+---
+
+## Best Practices
+
+| Do ✅                                     | Don't ❌                       |
+| ----------------------------------------- | ------------------------------ |
+| ใช้ `gap-*` กับ flex/grid                 | ใช้ margin บน children         |
+| ใช้ `flex-1` สำหรับยืดเติมที่เหลือ        | Hard-code width                |
+| ใช้ responsive grid `sm:grid-cols-2`      | ใช้ fixed columns ทุก viewport |
+| ใช้ `items-center` สำหรับ vertical center | ใช้ padding แทน                |
+
+---
+
+## Tips
+
+1. **Flex vs Grid:** ถ้าจัดแค่แถวเดียวใช้ `flex`, ถ้าหลายแถวใช้ `grid`
+2. **Center anything:** `flex items-center justify-center` = center ทั้ง x และ y
+3. **`flex-1` vs `flex-grow`:** `flex-1` = grow + basis:0, `flex-grow` = grow only
+4. **Grid auto-fill:** `grid-cols-[repeat(auto-fill,minmax(200px,1fr))]` = responsive โดยอัตโนมัติ

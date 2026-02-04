@@ -1,0 +1,36 @@
+---
+title: Tailwind CSS 4 Guide
+description: คู่มือ Tailwind CSS 4 ฉบับสมบูรณ์ ตั้งแต่พื้นฐานจนถึงขั้นสูง
+template: splash
+hero:
+  tagline: เรียนรู้ Tailwind CSS 4 ตั้งแต่ Basic → Advanced
+  image:
+    file: ../../assets/houston.webp
+  actions:
+    - text: เริ่มเรียนเลย
+      link: /part1/installation/
+      icon: right-arrow
+    - text: ดูสารบัญทั้งหมด
+      link: /part1/editor-setup/
+      icon: open-book
+      variant: minimal
+---
+
+import { Card, CardGrid } from "@astrojs/starlight/components";
+
+## เนื้อหาในหนังสือ
+
+<CardGrid stagger>
+  <Card title="Part 1-2: Basic" icon="pencil">
+    เริ่มต้นใช้งาน + Core Utilities (12 บท)
+  </Card>
+  <Card title="Part 3: Intermediate" icon="document">
+    States & Responsive Design (3 บท)
+  </Card>
+  <Card title="Part 4-6: Advanced" icon="setting">
+    Visual Effects, Customization, Accessibility (9 บท)
+  </Card>
+  <Card title="Part 7: Project" icon="rocket">
+    Hands-On: Landing Page → Dashboard
+  </Card>
+</CardGrid>

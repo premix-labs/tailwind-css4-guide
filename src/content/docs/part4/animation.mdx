@@ -1,0 +1,112 @@
+---
+title: Transitions & Animation
+description: การสร้าง transitions และ animations
+---
+
+# Transitions & Animation
+
+## Transition
+
+```html
+<button class="transition duration-300 ease-in-out hover:bg-blue-600">
+  Smooth transition
+</button>
+```
+
+### Transition Property
+
+| Class                  | Properties                                     |
+| ---------------------- | ---------------------------------------------- |
+| `transition`           | colors, bg, border, shadow, opacity, transform |
+| `transition-all`       | ทุก property                                   |
+| `transition-colors`    | เฉพาะสี                                        |
+| `transition-opacity`   | เฉพาะ opacity                                  |
+| `transition-transform` | เฉพาะ transform                                |
+| `transition-none`      | ปิด transition                                 |
+
+### Duration
+
+| Class           | Time   |
+| --------------- | ------ |
+| `duration-75`   | 75ms   |
+| `duration-150`  | 150ms  |
+| `duration-300`  | 300ms  |
+| `duration-500`  | 500ms  |
+| `duration-1000` | 1000ms |
+
+### Timing Function
+
+| Class         | Effect                  |
+| ------------- | ----------------------- |
+| `ease-linear` | ความเร็วคงที่           |
+| `ease-in`     | เริ่มช้า จบเร็ว         |
+| `ease-out`    | เริ่มเร็ว จบช้า         |
+| `ease-in-out` | เริ่มช้า กลางเร็ว จบช้า |
+
+---
+
+## Built-in Animations
+
+```html
+<div class="animate-spin">🔄 Loading...</div>
+<div class="animate-pulse">Skeleton loading</div>
+<div class="animate-bounce">⬇️ Scroll down</div>
+<div class="animate-ping">🔔 Notification</div>
+```
+
+| Class            | Effect            |
+| ---------------- | ----------------- |
+| `animate-spin`   | หมุน 360° loop    |
+| `animate-pulse`  | จางเข้า-ออก       |
+| `animate-bounce` | เด้งขึ้นลง        |
+| `animate-ping`   | กระจายออก (radar) |
+| `animate-none`   | ปิด animation     |
+
+---
+
+## Custom Animation (v4)
+
+สร้าง animation ใหม่ด้วย `@theme`:
+
+```css
+@import "tailwindcss";
+
+@theme {
+  --animate-wiggle: wiggle 1s ease-in-out infinite;
+
+  @keyframes wiggle {
+    0%,
+    100% {
+      transform: rotate(-3deg);
+    }
+    50% {
+      transform: rotate(3deg);
+    }
+  }
+}
+```
+
+> **Note:** `@keyframes` ต้องอยู่ **ภายใน** `@theme` block เพื่อให้ Tailwind generate CSS ได้ถูกต้อง
+
+ใช้งาน:
+
+```html
+<div class="animate-wiggle">👋 Hello!</div>
+```
+
+---
+
+## ตัวอย่างปุ่มสวยๆ
+
+```html
+<button
+  class="
+  bg-blue-500 text-white px-6 py-3 rounded-lg
+  transition-all duration-300 ease-out
+  hover:bg-blue-600 hover:scale-105 hover:shadow-lg
+  active:scale-95
+"
+>
+  Click me
+</button>
+```

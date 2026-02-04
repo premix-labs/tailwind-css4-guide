@@ -1,0 +1,246 @@
+---
+title: Transforms
+description: การใช้ rotate, scale, translate, skew และ origin
+---
+
+# Transforms
+
+## Rotate
+
+```html
+<div class="rotate-45">หมุน 45°</div>
+<div class="rotate-90">หมุน 90°</div>
+<div class="rotate-180">หมุน 180°</div>
+<div class="-rotate-45">หมุน -45°</div>
+<div class="hover:rotate-180 transition duration-500">Rotate on hover</div>
+```
+
+| Class        | Rotation |
+| ------------ | -------- |
+| `rotate-0`   | 0deg     |
+| `rotate-1`   | 1deg     |
+| `rotate-2`   | 2deg     |
+| `rotate-3`   | 3deg     |
+| `rotate-6`   | 6deg     |
+| `rotate-12`  | 12deg    |
+| `rotate-45`  | 45deg    |
+| `rotate-90`  | 90deg    |
+| `rotate-180` | 180deg   |
+| `-rotate-45` | -45deg   |
+
+---
+
+## Scale
+
+```html
+<div class="scale-50">50% size</div>
+<div class="scale-100">100% (normal)</div>
+<div class="scale-110">10% larger</div>
+<div class="scale-150">50% larger</div>
+<div class="hover:scale-105 transition">Scale on hover</div>
+```
+
+### Scale X/Y
+
+```html
+<div class="scale-x-150">กว้างขึ้น 50%</div>
+<div class="scale-y-50">สูงลด 50%</div>
+```
+
+---
+
+## Translate
+
+```html
+<div class="translate-x-4">Move right 1rem</div>
+<div class="translate-y-2">Move down 0.5rem</div>
+<div class="-translate-x-4">Move left 1rem</div>
+<div class="translate-x-1/2">Move right 50%</div>
+<div class="hover:-translate-y-1 transition">Move up on hover</div>
+```
+
+### Centering with Translate
+
+```html
+<div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+  Perfect center
+</div>
+```
+
+---
+
+## Skew
+
+```html
+<div class="skew-x-12">เอียงแนวนอน</div>
+<div class="skew-y-6">เอียงแนวตั้ง</div>
+<div class="-skew-x-6">เอียงแนวนอนกลับ</div>
+```
+
+| Class       | Effect |
+| ----------- | ------ |
+| `skew-x-0`  | 0deg   |
+| `skew-x-1`  | 1deg   |
+| `skew-x-2`  | 2deg   |
+| `skew-x-3`  | 3deg   |
+| `skew-x-6`  | 6deg   |
+| `skew-x-12` | 12deg  |
+
+---
+
+## Transform Origin
+
+กำหนดจุดศูนย์กลางของ transform:
+
+```html
+<div class="origin-center rotate-45">หมุนจากตรงกลาง (default)</div>
+<div class="origin-top-left rotate-45">หมุนจากมุมซ้ายบน</div>
+<div class="origin-bottom rotate-45">หมุนจากด้านล่าง</div>
+```
+
+| Class                 | Origin        |
+| --------------------- | ------------- |
+| `origin-center`       | center        |
+| `origin-top`          | top center    |
+| `origin-bottom`       | bottom center |
+| `origin-left`         | left center   |
+| `origin-right`        | right center  |
+| `origin-top-left`     | top left      |
+| `origin-top-right`    | top right     |
+| `origin-bottom-left`  | bottom left   |
+| `origin-bottom-right` | bottom right  |
+
+---
+
+## รวมหลาย Transforms
+
+```html
+<div
+  class="hover:scale-105 hover:rotate-3 hover:-translate-y-1 
+            transition-transform duration-300 ease-out"
+>
+  Combined transforms on hover
+</div>
+```
+
+---
+
+## ตัวอย่างการใช้งาน
+
+### Card Hover Effect
+
+```html
+<div class="group">
+  <div
+    class="transition-transform duration-300 
+              group-hover:scale-105 group-hover:rotate-1"
+  >
+    <img src="..." class="rounded-lg" />
+  </div>
+</div>
+```
+
+### Icon Animation
+
+```html
+<button class="group">
+  <svg class="w-5 h-5 transition-transform group-hover:rotate-12">...</svg>
+  Settings
+</button>
+```
+
+---
+
+## 3D Transforms
+
+### Perspective
+
+กำหนดระยะมองสำหรับ 3D effects:
+
+```html
+<div class="perspective-500">
+  <div class="rotate-y-45">3D rotated element</div>
+</div>
+
+<div class="perspective-1000">
+  <div class="rotate-x-12">Less dramatic 3D</div>
+</div>
+```
+
+| Class              | Value  |
+| ------------------ | ------ |
+| `perspective-none` | none   |
+| `perspective-250`  | 250px  |
+| `perspective-500`  | 500px  |
+| `perspective-750`  | 750px  |
+| `perspective-1000` | 1000px |
+
+### Rotate 3D (X/Y)
+
+```html
+<!-- Rotate along X axis -->
+<div class="rotate-x-12">Tilt forward/back</div>
+<div class="rotate-x-45">More tilt</div>
+<div class="-rotate-x-12">Tilt backward</div>
+
+<!-- Rotate along Y axis -->
+<div class="rotate-y-12">Rotate left/right</div>
+<div class="rotate-y-180">Flip horizontally</div>
+```
+
+### Preserve 3D
+
+```html
+<div class="transform-3d">
+  <!-- Children maintain 3D space -->
+  <div class="rotate-y-45">Stays 3D</div>
+</div>
+```
+
+### Backface Visibility
+
+```html
+<!-- ซ่อนด้านหลังเมื่อหมุน -->
+<div class="backface-hidden rotate-y-180">Hidden when flipped</div>
+
+<div class="backface-visible rotate-y-180">Always visible</div>
+```
+
+---
+
+## ตัวอย่าง: Card Flip
+
+```html
+<div class="group perspective-1000 w-64 h-40">
+  <div
+    class="relative w-full h-full transition-transform duration-500 
+              transform-3d group-hover:rotate-y-180"
+  >
+    <!-- Front -->
+    <div
+      class="absolute inset-0 backface-hidden bg-blue-500 
+                rounded-lg flex items-center justify-center text-white"
+    >
+      <p class="text-xl font-bold">Front Side</p>
+    </div>
+    <!-- Back -->
+    <div
+      class="absolute inset-0 backface-hidden rotate-y-180 bg-purple-500 
+                rounded-lg flex items-center justify-center text-white"
+    >
+      <p class="text-xl font-bold">Back Side</p>
+    </div>
+  </div>
+</div>
+```
+
+---
+
+## Best Practices
+
+| Do ✅                                               | Don't ❌                              |
+| --------------------------------------------------- | ------------------------------------- |
+| ใช้ `transition` กับ transforms                     | Transform โดยไม่มี transition         |
+| ใช้ `will-change-transform` สำหรับ heavy animations | ใส่ `will-change` ทุกที่              |
+| ใช้ 3D transforms เมื่อจำเป็น                       | ใช้ 3D สำหรับ 2D effects              |
+| ใช้ `perspective` กับ parent                        | ใส่ `perspective` บน element เดียวกัน |

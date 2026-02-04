@@ -1,0 +1,174 @@
+---
+title: Colors & Backgrounds
+description: การใช้สี พื้นหลัง gradients และ OKLCH
+---
+
+# Colors & Backgrounds
+
+## Color Palette
+
+Tailwind มี color palette 22 สี แต่ละสี 11 shades (50-950):
+
+```html
+<div class="bg-blue-500">Blue 500</div>
+<div class="text-gray-900">Gray 900</div>
+<div class="border-red-300">Red 300</div>
+```
+
+### สีหลัก
+
+| Color    | Usage         |
+| -------- | ------------- |
+| `slate`  | Neutral cool  |
+| `gray`   | Neutral       |
+| `zinc`   | Neutral warm  |
+| `red`    | Error, danger |
+| `orange` | Warning       |
+| `amber`  | Warning alt   |
+| `yellow` | Highlight     |
+| `green`  | Success       |
+| `blue`   | Primary, info |
+| `indigo` | Primary alt   |
+| `purple` | Accent        |
+| `pink`   | Accent alt    |
+
+---
+
+## Background Color
+
+```html
+<div class="bg-white">White</div>
+<div class="bg-gray-100">Light gray</div>
+<div class="bg-blue-500">Blue</div>
+<div class="bg-transparent">Transparent</div>
+<div class="bg-current">Current text color</div>
+```
+
+---
+
+## Text Color
+
+```html
+<p class="text-gray-900">Dark text</p>
+<p class="text-gray-600">Muted text</p>
+<p class="text-blue-500">Primary text</p>
+<p class="text-white">White text</p>
+```
+
+---
+
+## Opacity Modifier
+
+ใช้ `/` ตามด้วยค่า opacity (0-100):
+
+```html
+<div class="bg-black/50">50% opacity background</div>
+<div class="bg-blue-500/75">75% opacity</div>
+<div class="text-white/80">80% opacity text</div>
+<div class="border-gray-900/10">10% opacity border</div>
+```
+
+---
+
+## OKLCH Colors (v4 ใหม่!)
+
+Tailwind CSS 4 ใช้ OKLCH color space เป็น default:
+
+```css
+@theme {
+  --color-brand: oklch(0.6 0.2 250);
+  /*           lightness chroma hue */
+}
+```
+
+| Part      | Range  | Description      |
+| --------- | ------ | ---------------- |
+| Lightness | 0-1    | 0=black, 1=white |
+| Chroma    | 0-0.37 | ความเข้มของสี    |
+| Hue       | 0-360  | โทนสี (degrees)  |
+
+> **ข้อดีของ OKLCH:**
+>
+> - Gradients สวยกว่า ไม่มี "muddy" colors กลางทาง
+> - Consistent perceived brightness
+> - ดีสำหรับ dark mode
+
+---
+
+## Gradients
+
+### Linear Gradient
+
+```html
+<div class="bg-gradient-to-r from-blue-500 to-purple-500">Left to right</div>
+
+<div class="bg-gradient-to-br from-pink-500 via-red-500 to-yellow-500">
+  With via color
+</div>
+```
+
+### Gradient Directions
+
+| Class               | Direction         |
+| ------------------- | ----------------- |
+| `bg-gradient-to-t`  | ↑ to top          |
+| `bg-gradient-to-b`  | ↓ to bottom       |
+| `bg-gradient-to-l`  | ← to left         |
+| `bg-gradient-to-r`  | → to right        |
+| `bg-gradient-to-tl` | ↖ to top-left     |
+| `bg-gradient-to-tr` | ↗ to top-right    |
+| `bg-gradient-to-bl` | ↙ to bottom-left  |
+| `bg-gradient-to-br` | ↘ to bottom-right |
+
+### Gradient Stops
+
+```html
+<div
+  class="bg-gradient-to-r from-cyan-500 from-10% via-blue-500 via-30% to-violet-500"
+>
+  Custom positions
+</div>
+```
+
+---
+
+## Background Image
+
+```html
+<div class="bg-[url('/hero.jpg')] bg-cover bg-center bg-no-repeat">
+  Hero section
+</div>
+```
+
+| Class          | Effect             |
+| -------------- | ------------------ |
+| `bg-cover`     | ขยายเต็ม container |
+| `bg-contain`   | ย่อให้พอดี         |
+| `bg-center`    | จัดกึ่งกลาง        |
+| `bg-no-repeat` | ไม่ซ้ำ             |
+| `bg-repeat`    | ซ้ำ (default)      |
+| `bg-fixed`     | parallax effect    |
+
+---
+
+## ตัวอย่าง
+
+### Glassmorphism Card
+
+```html
+<div
+  class="bg-white/30 backdrop-blur-md border border-white/20 rounded-2xl p-6"
+>
+  Frosted glass effect
+</div>
+```
+
+### Gradient Text
+
+```html
+<h1
+  class="bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent"
+>
+  Gradient Text
+</h1>
+```

@@ -1,0 +1,227 @@
+---
+title: E-commerce Product Card
+description: สร้าง Product Card สำหรับร้านค้าออนไลน์
+sidebar:
+  order: 26
+---
+
+# E-commerce Product Card
+
+## ผลลัพธ์ที่ได้
+
+Product card ที่มี:
+
+- รูปสินค้า + hover zoom
+- Badge (New, Sale)
+- ราคา + ราคาลด
+- Rating stars
+- Add to cart button
+- Responsive design
+
+---
+
+## Full Code
+
+```html
+<div class="@container">
+  <article
+    class="group bg-white dark:bg-gray-800 rounded-2xl shadow-lg 
+                  overflow-hidden transition-transform hover:-translate-y-1"
+  >
+    <!-- Image Container -->
+    <div class="relative aspect-square overflow-hidden">
+      <img
+        src="https://picsum.photos/400"
+        alt="Product"
+        class="w-full h-full object-cover transition-transform duration-500 
+               group-hover:scale-110"
+      />
+
+      <!-- Badges -->
+      <div class="absolute top-3 left-3 flex gap-2">
+        <span
+          class="bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full"
+        >
+          NEW
+        </span>
+        <span
+          class="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full"
+        >
+          -20%
+        </span>
+      </div>
+
+      <!-- Quick Actions -->
+      <div
+        class="absolute top-3 right-3 flex flex-col gap-2 
+                  opacity-0 group-hover:opacity-100 transition-opacity"
+      >
+        <button
+          class="p-2 bg-white/80 backdrop-blur rounded-full 
+                       hover:bg-white transition-colors shadow"
+        >
+          <svg
+            class="w-5 h-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+            />
+          </svg>
+        </button>
+        <button
+          class="p-2 bg-white/80 backdrop-blur rounded-full 
+                       hover:bg-white transition-colors shadow"
+        >
+          <svg
+            class="w-5 h-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+            />
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="p-4 @md:p-6">
+      <!-- Category -->
+      <p class="text-sm text-gray-500 dark:text-gray-400 mb-1">Electronics</p>
+
+      <!-- Title -->
+      <h3
+        class="font-bold text-gray-900 dark:text-white 
+                 line-clamp-2 @lg:text-lg mb-2"
+      >
+        Wireless Bluetooth Headphones with Noise Cancellation
+      </h3>
+
+      <!-- Rating -->
+      <div class="flex items-center gap-1 mb-3">
+        <div class="flex text-yellow-400">
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
+            <path
+              d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"
+            />
+          </svg>
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
+            <path
+              d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"
+            />
+          </svg>
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
+            <path
+              d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"
+            />
+          </svg>
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
+            <path
+              d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"
+            />
+          </svg>
+          <svg class="w-4 h-4 fill-current text-gray-300" viewBox="0 0 20 20">
+            <path
+              d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"
+            />
+          </svg>
+        </div>
+        <span class="text-sm text-gray-500">(128 reviews)</span>
+      </div>
+
+      <!-- Price -->
+      <div class="flex items-center gap-2 mb-4">
+        <span class="text-2xl font-bold text-gray-900 dark:text-white"
+          >$79.99</span
+        >
+        <span class="text-sm text-gray-400 line-through">$99.99</span>
+      </div>
+
+      <!-- Add to Cart -->
+      <button
+        class="w-full py-3 bg-gradient-to-r from-blue-500 to-purple-600 
+                     text-white font-semibold rounded-xl
+                     hover:from-blue-600 hover:to-purple-700 
+                     active:scale-95 transition-all duration-200
+                     shadow-lg shadow-blue-500/25"
+      >
+        Add to Cart
+      </button>
+    </div>
+  </article>
+</div>
+```
+
+---
+
+## Concepts ที่ใช้
+
+| Concept               | Classes Used                                                |
+| --------------------- | ----------------------------------------------------------- |
+| **Container Queries** | `@container`, `@md:p-6`, `@lg:text-lg`                      |
+| **Group Hover**       | `group`, `group-hover:scale-110`, `group-hover:opacity-100` |
+| **Transitions**       | `transition-transform`, `duration-500`                      |
+| **Glassmorphism**     | `bg-white/80`, `backdrop-blur`                              |
+| **Dark Mode**         | `dark:bg-gray-800`, `dark:text-white`                       |
+| **Gradients**         | `bg-gradient-to-r`, `from-blue-500`, `to-purple-600`        |
+| **Shadows**           | `shadow-lg`, `shadow-blue-500/25`                           |
+| **Line Clamp**        | `line-clamp-2`                                              |
+| **Aspect Ratio**      | `aspect-square`                                             |
+| **Active States**     | `active:scale-95`                                           |
+
+---
+
+## Responsive Variants
+
+### Card Grid
+
+```html
+<div
+  class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+>
+  <!-- Product Cards -->
+</div>
+```
+
+### Horizontal Card (Large Screens)
+
+```html
+<article class="@container">
+  <div class="block @xl:flex gap-6">
+    <img class="w-full @xl:w-48 aspect-square object-cover rounded-xl" />
+    <div class="flex-1">
+      <!-- Content -->
+    </div>
+  </div>
+</article>
+```
+
+---
+
+## Best Practices ที่ใช้
+
+| Practice                | Implementation                    |
+| ----------------------- | --------------------------------- |
+| ✅ Hover feedback       | Scale, opacity transitions        |
+| ✅ Accessibility        | Alt text, focus states            |
+| ✅ Dark mode support    | `dark:` variants                  |
+| ✅ Container responsive | `@container` + `@md:`             |
+| ✅ Performance          | `will-change` on heavy animations |
+| ✅ Visual hierarchy     | Size, color contrast              |

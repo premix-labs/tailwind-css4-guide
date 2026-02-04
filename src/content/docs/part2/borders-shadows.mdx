@@ -1,0 +1,158 @@
+---
+title: Borders & Shadows
+description: การจัดการขอบ มุมโค้ง เงา และ ring
+---
+
+# Borders & Shadows
+
+## แนวคิด
+
+Borders และ Shadows เป็น utilities ที่ใช้บ่อยมากสำหรับ:
+
+- สร้าง **cards** และ **containers**
+- ทำให้ UI มี **depth** และ **hierarchy**
+- แยก **sections** ออกจากกัน
+
+---
+
+## Border Width
+
+| Class      | CSS                 |
+| ---------- | ------------------- |
+| `border`   | `border-width: 1px` |
+| `border-0` | `border-width: 0`   |
+| `border-2` | `border-width: 2px` |
+| `border-4` | `border-width: 4px` |
+| `border-8` | `border-width: 8px` |
+
+### Border แต่ละด้าน
+
+```html
+<div class="border-t-4">Top border only</div>
+<div class="border-b-2">Bottom border only</div>
+<div class="border-l-4 border-blue-500">Left accent</div>
+<div class="border-x-2">Left and right</div>
+<div class="border-y-2">Top and bottom</div>
+```
+
+---
+
+## Border Color
+
+```html
+<div class="border-2 border-gray-300">Default</div>
+<div class="border-2 border-blue-500">Primary</div>
+<div class="border-2 border-red-500">Error</div>
+<div class="border-2 border-transparent">Transparent</div>
+```
+
+---
+
+## Border Radius
+
+| Class          | Radius   | Use Case       |
+| -------------- | -------- | -------------- |
+| `rounded-none` | 0        | Square         |
+| `rounded-sm`   | 0.125rem | Subtle         |
+| `rounded`      | 0.25rem  | Default        |
+| `rounded-md`   | 0.375rem | Medium         |
+| `rounded-lg`   | 0.5rem   | Cards          |
+| `rounded-xl`   | 0.75rem  | Large cards    |
+| `rounded-2xl`  | 1rem     | Modals         |
+| `rounded-3xl`  | 1.5rem   | Hero cards     |
+| `rounded-full` | 9999px   | Circles, Pills |
+
+### Radius แต่ละมุม
+
+```html
+<div class="rounded-t-lg">Top corners only</div>
+<div class="rounded-b-lg">Bottom corners only</div>
+<div class="rounded-l-lg">Left corners only</div>
+<div class="rounded-tl-lg rounded-br-lg">Diagonal corners</div>
+```
+
+---
+
+## Box Shadow
+
+| Class          | Intensity  | Use Case          |
+| -------------- | ---------- | ----------------- |
+| `shadow-sm`    | Very light | Subtle elevation  |
+| `shadow`       | Light      | Cards             |
+| `shadow-md`    | Medium     | Dropdowns         |
+| `shadow-lg`    | Heavy      | Modals            |
+| `shadow-xl`    | Very heavy | Floating elements |
+| `shadow-2xl`   | Intense    | Hero sections     |
+| `shadow-inner` | Inward     | Inset effects     |
+| `shadow-none`  | None       | Remove shadow     |
+
+### Shadow Colors (v4)
+
+```html
+<div class="shadow-lg shadow-blue-500/50">Blue glow</div>
+<div class="shadow-lg shadow-purple-500/30">Purple glow</div>
+```
+
+---
+
+## Ring (Focus States)
+
+Ring เป็น utility สำหรับ focus states ที่ไม่กระทบ layout:
+
+```html
+<button class="ring-2 ring-blue-500">Always has ring</button>
+<button class="focus:ring-2 focus:ring-blue-500">Ring on focus</button>
+<input class="focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" />
+```
+
+| Class           | Effect                       |
+| --------------- | ---------------------------- |
+| `ring`          | 3px ring                     |
+| `ring-2`        | 2px ring                     |
+| `ring-4`        | 4px ring                     |
+| `ring-blue-500` | Ring color                   |
+| `ring-offset-2` | Space between ring & element |
+| `ring-inset`    | Ring inside element          |
+
+---
+
+## ตัวอย่าง Practical
+
+### Card Component
+
+```html
+<div class="bg-white rounded-xl shadow-lg border border-gray-100 p-6">
+  <h3 class="font-bold text-lg mb-2">Card Title</h3>
+  <p class="text-gray-600">Card content goes here.</p>
+</div>
+```
+
+### Input with Focus
+
+```html
+<input
+  class="border border-gray-300 rounded-lg px-4 py-2
+         focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+  placeholder="Enter text..."
+/>
+```
+
+### Alert with Left Border
+
+```html
+<div class="border-l-4 border-blue-500 bg-blue-50 p-4 rounded-r-lg">
+  <strong class="text-blue-700">Info:</strong>
+  <span class="text-blue-600">This is an info message.</span>
+</div>
+```
+
+---
+
+## Best Practices
+
+| Do ✅                           | Don't ❌                   |
+| ------------------------------- | -------------------------- |
+| ใช้ `ring` สำหรับ focus states  | ใช้ `border` สำหรับ focus  |
+| ใช้ `shadow-lg` กับ modals      | ใช้ shadow มากเกินไป       |
+| ใช้ colored shadows สำหรับ glow | ใช้ shadow ดำทุกที่        |
+| ใช้ consistent border radius    | ผสมหลาย radius ใน UI เดียว |

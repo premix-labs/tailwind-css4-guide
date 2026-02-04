@@ -1,0 +1,88 @@
+---
+title: Editor Setup
+description: การตั้งค่า VS Code และ Extensions สำหรับ Tailwind CSS 4
+---
+
+# Editor Setup
+
+การตั้งค่า Editor เพื่อประสบการณ์การเขียนโค้ดที่ดีที่สุด
+
+## VS Code Extensions
+
+### 1. Tailwind CSS IntelliSense (จำเป็น)
+
+Extension อย่างเป็นทางการจาก Tailwind Labs
+
+- Autocomplete สำหรับ class names
+- Syntax highlighting สำหรับ `@theme`, `@apply`
+- Hover preview แสดง CSS ที่ generate
+- Linting สำหรับ class conflicts
+
+**ติดตั้ง:** ค้นหา "Tailwind CSS IntelliSense" ใน VS Code Extensions
+
+### 2. Prettier + Tailwind Plugin (แนะนำ)
+
+เรียงลำดับ class names อัตโนมัติ:
+
+```bash
+npm install -D prettier prettier-plugin-tailwindcss
+```
+
+สร้าง `.prettierrc`:
+
+```json
+{
+  "plugins": ["prettier-plugin-tailwindcss"],
+  "tailwindFunctions": ["clsx", "cx", "cva"]
+}
+```
+
+---
+
+## VS Code Settings
+
+เพิ่มใน `.vscode/settings.json`:
+
+```json
+{
+  "tailwindCSS.experimental.configFile": "./src/styles/global.css",
+  "editor.quickSuggestions": {
+    "strings": "on"
+  },
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+}
+```
+
+---
+
+## CSS Language Support
+
+สำหรับ syntax highlighting ใน CSS files:
+
+```json
+{
+  "files.associations": {
+    "*.css": "tailwindcss"
+  }
+}
+```
+
+> **Note:** ใน v4 ให้ชี้ `configFile` ไปที่ CSS file ที่มี `@theme` แทน `tailwind.config.js`
+
+---
+
+## Recommended Extensions
+
+| Extension                 | Purpose                      |
+| ------------------------- | ---------------------------- |
+| Tailwind CSS IntelliSense | Autocomplete, hover, linting |
+| Prettier                  | Code formatting              |
+| PostCSS Language Support  | CSS syntax for PostCSS       |
+| Error Lens                | Inline error display         |

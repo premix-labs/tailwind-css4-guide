@@ -1,0 +1,202 @@
+---
+title: Filters & Backdrop
+description: การใช้ blur, brightness, contrast, saturate และ backdrop effects
+---
+
+# Filters & Backdrop
+
+## Blur
+
+```html
+<img class="blur-none" src="..." />
+<img class="blur-sm" src="..." />
+<img class="blur" src="..." />
+<img class="blur-md" src="..." />
+<img class="blur-lg" src="..." />
+<img class="blur-xl" src="..." />
+<img class="blur-2xl" src="..." />
+<img class="blur-3xl" src="..." />
+```
+
+| Class       | Blur amount |
+| ----------- | ----------- |
+| `blur-none` | 0           |
+| `blur-sm`   | 4px         |
+| `blur`      | 8px         |
+| `blur-md`   | 12px        |
+| `blur-lg`   | 16px        |
+| `blur-xl`   | 24px        |
+| `blur-2xl`  | 40px        |
+| `blur-3xl`  | 64px        |
+
+---
+
+## Brightness
+
+```html
+<img class="brightness-50" src="..." />
+<!-- 50% -->
+<img class="brightness-75" src="..." />
+<!-- 75% -->
+<img class="brightness-100" src="..." />
+<!-- normal -->
+<img class="brightness-125" src="..." />
+<!-- 125% -->
+<img class="brightness-150" src="..." />
+<!-- 150% -->
+<img class="brightness-200" src="..." />
+<!-- 200% -->
+```
+
+---
+
+## Contrast
+
+```html
+<img class="contrast-50" src="..." />
+<!-- ต่ำ -->
+<img class="contrast-100" src="..." />
+<!-- ปกติ -->
+<img class="contrast-150" src="..." />
+<!-- สูง -->
+<img class="contrast-200" src="..." />
+<!-- สูงมาก -->
+```
+
+---
+
+## Saturate
+
+ปรับความอิ่มตัวของสี:
+
+```html
+<img class="saturate-0" src="..." />
+<!-- grayscale -->
+<img class="saturate-50" src="..." />
+<!-- 50% -->
+<img class="saturate-100" src="..." />
+<!-- ปกติ -->
+<img class="saturate-150" src="..." />
+<!-- เข้มขึ้น -->
+<img class="saturate-200" src="..." />
+<!-- เข้มมาก -->
+```
+
+---
+
+## Grayscale
+
+```html
+<img class="grayscale" src="..." /> <img class="grayscale-0" src="..." />
+<!-- สี (default) -->
+<img class="grayscale hover:grayscale-0 transition" src="..." />
+```
+
+---
+
+## Hue Rotate
+
+หมุนสี:
+
+```html
+<img class="hue-rotate-0" src="..." />
+<img class="hue-rotate-15" src="..." />
+<img class="hue-rotate-30" src="..." />
+<img class="hue-rotate-60" src="..." />
+<img class="hue-rotate-90" src="..." />
+<img class="hue-rotate-180" src="..." />
+```
+
+---
+
+## Invert
+
+กลับสี:
+
+```html
+<img class="invert" src="..." />
+<!-- กลับสี 100% -->
+<img class="invert-0" src="..." />
+<!-- ปกติ -->
+
+<!-- Dark mode trick for icons -->
+<img class="dark:invert" src="/icon-black.svg" />
+```
+
+---
+
+## Sepia
+
+```html
+<img class="sepia" src="..." />
+<!-- sepia 100% -->
+<img class="sepia-0" src="..." />
+<!-- ปกติ -->
+```
+
+---
+
+## Backdrop Blur (Glassmorphism)
+
+ทำ blur กับพื้นหลังด้านหลัง element:
+
+```html
+<div class="backdrop-blur-sm bg-white/30">Light blur</div>
+<div class="backdrop-blur-md bg-white/30">Medium blur</div>
+<div class="backdrop-blur-lg bg-black/30">Heavy blur</div>
+```
+
+### Glassmorphism Card
+
+```html
+<div
+  class="backdrop-blur-xl bg-white/10 border border-white/20 
+            rounded-2xl p-6 shadow-xl"
+>
+  <h3 class="text-white font-bold">Frosted Glass</h3>
+  <p class="text-white/80">Beautiful glassmorphism effect</p>
+</div>
+```
+
+---
+
+## Backdrop อื่นๆ
+
+```html
+<div class="backdrop-brightness-50">Dim background</div>
+<div class="backdrop-contrast-125">Increase bg contrast</div>
+<div class="backdrop-grayscale">Grayscale background</div>
+<div class="backdrop-saturate-200">Saturate background</div>
+```
+
+---
+
+## รวม Filters
+
+```html
+<img class="brightness-110 contrast-110 saturate-150" src="..." />
+```
+
+---
+
+## ตัวอย่างการใช้งาน
+
+### Image Hover Effect
+
+```html
+<div class="relative overflow-hidden rounded-lg">
+  <img
+    class="w-full grayscale hover:grayscale-0 
+              hover:scale-105 transition duration-500"
+    src="..."
+  />
+</div>
+```
+
+### Modal Backdrop
+
+```html
+<div class="fixed inset-0 backdrop-blur-sm bg-black/50 z-40">
+  <!-- backdrop -->
+</div>
+```

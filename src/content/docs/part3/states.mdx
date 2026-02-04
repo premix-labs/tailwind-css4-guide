@@ -1,0 +1,151 @@
+---
+title: Hover, Focus & States
+description: การใช้ state modifiers สำหรับ interactive elements
+---
+
+# Hover, Focus & States
+
+## แนวคิด
+
+State modifiers ทำให้ elements **ตอบสนอง** ต่อ user interactions:
+
+- **Hover** — เมื่อ mouse อยู่บน element
+- **Focus** — เมื่อ element ได้รับ focus (keyboard/click)
+- **Active** — เมื่อกำลังกด element
+
+> **ทำไมสำคัญ?** Interactive feedback ช่วยให้ users รู้ว่าสิ่งที่พวกเขาทำมีผล
+
+---
+
+## Pseudo-class Modifiers
+
+### Hover & Active
+
+```html
+<button class="bg-blue-500 hover:bg-blue-600 active:bg-blue-700">
+  Click me
+</button>
+```
+
+### Focus States
+
+```html
+<!-- focus ปกติ -->
+<input class="border focus:border-blue-500 focus:ring-2" />
+
+<!-- focus-within (เมื่อ child ได้รับ focus) -->
+<div class="focus-within:ring-2 focus-within:ring-blue-500">
+  <input type="text" />
+</div>
+
+<!-- focus-visible (เฉพาะ keyboard) -->
+<button class="focus:outline-none focus-visible:ring-2">Keyboard only</button>
+```
+
+### Disabled & Enabled
+
+```html
+<button class="disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+  Disabled
+</button>
+
+<input class="enabled:bg-white disabled:bg-gray-100" />
+```
+
+---
+
+## First, Last, Odd, Even
+
+```html
+<ul>
+  <li class="first:pt-0 last:pb-0">Item</li>
+  <li class="first:pt-0 last:pb-0">Item</li>
+</ul>
+
+<!-- Zebra striping -->
+<tr class="odd:bg-white even:bg-gray-50">
+  ...
+</tr>
+```
+
+---
+
+## Group Modifier
+
+Style elements based on parent state:
+
+```html
+<div class="group hover:bg-gray-100 p-4 rounded-lg cursor-pointer">
+  <h3 class="group-hover:text-blue-500 font-bold">Title</h3>
+  <p class="group-hover:text-gray-600">Description</p>
+  <span class="opacity-0 group-hover:opacity-100 transition">→</span>
+</div>
+```
+
+### Named Groups
+
+```html
+<div class="group/card">
+  <div class="group/button">
+    <button class="group-hover/button:bg-blue-600">Hover me</button>
+  </div>
+  <p class="group-hover/card:text-blue-500">Card content</p>
+</div>
+```
+
+---
+
+## Peer Modifier
+
+Style elements based on sibling state:
+
+```html
+<input type="checkbox" class="peer" id="toggle" />
+<label for="toggle" class="peer-checked:text-blue-500"> Checked! </label>
+
+<!-- Form validation -->
+<input type="email" class="peer" required />
+<p class="hidden peer-invalid:block text-red-500">Please enter a valid email</p>
+```
+
+---
+
+## State Modifier Summary
+
+| Modifier         | Trigger                       |
+| ---------------- | ----------------------------- |
+| `hover:`         | Mouse hover                   |
+| `focus:`         | Any focus                     |
+| `focus-visible:` | Keyboard focus only           |
+| `focus-within:`  | Child has focus               |
+| `active:`        | Being clicked                 |
+| `disabled:`      | Has disabled attribute        |
+| `checked:`       | Checkbox/radio checked        |
+| `required:`      | Has required attribute        |
+| `invalid:`       | Failed validation             |
+| `first:`         | First child                   |
+| `last:`          | Last child                    |
+| `odd:`           | Odd children (1, 3, 5...)     |
+| `even:`          | Even children (2, 4, 6...)    |
+| `group-hover:`   | Parent with .group is hovered |
+| `peer-checked:`  | Sibling with .peer is checked |
+
+---
+
+## Best Practices
+
+| Do ✅                                                     | Don't ❌                              |
+| --------------------------------------------------------- | ------------------------------------- |
+| ใช้ `focus-visible:` สำหรับ focus styles                  | ใช้ `focus:` แล้วซ่อน outline ทั้งหมด |
+| ใช้ `transition` กับ state changes                        | เปลี่ยนสีทันทีไม่มี transition        |
+| ใช้ `group` สำหรับ hover children                         | ใส่ hover บนทุก element แยก           |
+| ใช้ `disabled:opacity-50` + `disabled:cursor-not-allowed` | ปล่อยให้ disabled ดูเหมือนปุ่มปกติ    |
+
+---
+
+## Tips
+
+1. **`focus` vs `focus-visible`:** ใช้ `focus-visible` เมื่อไม่อยากให้ click แสดง focus ring
+2. **Named groups:** ใช้ `group/name` เมื่อมี nested groups หลายชั้น
+3. **Form validation:** ใช้ `peer` + `peer-invalid:block` แสดง error message
+4. **Always add transition:** `hover:bg-blue-600 transition` ดีกว่า `hover:bg-blue-600` เฉยๆ

@@ -1,0 +1,226 @@
+---
+title: "Project: Landing Page → Dashboard"
+description: สร้างโปรเจกต์จริงรวมทุกอย่างที่เรียนมา
+---
+
+# Hands-On Project
+
+## เป้าหมาย
+
+สร้าง 2 หน้าเว็บที่ใช้ทุก concept ที่เรียนมา:
+
+1. **Landing Page** - Marketing site สวยๆ
+2. **Dashboard** - Admin panel ที่ใช้งานได้จริง
+
+---
+
+## Part 1: Landing Page
+
+### Hero Section
+
+```html
+<section
+  class="min-h-screen flex items-center justify-center 
+                bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500"
+>
+  <div class="text-center text-white px-4">
+    <h1 class="text-4xl md:text-6xl font-bold mb-4 animate-fade-in">
+      Build Amazing Products
+    </h1>
+    <p class="text-xl md:text-2xl opacity-80 mb-8 max-w-2xl mx-auto">
+      The fastest way to ship beautiful web applications
+    </p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <button
+        class="bg-white text-purple-600 px-8 py-3 rounded-full 
+                     font-semibold hover:scale-105 transition-transform
+                     shadow-lg hover:shadow-xl"
+      >
+        Get Started
+      </button>
+      <button
+        class="border-2 border-white text-white px-8 py-3 
+                     rounded-full font-semibold hover:bg-white/10 transition"
+      >
+        Learn More
+      </button>
+    </div>
+  </div>
+</section>
+```
+
+### Feature Cards
+
+```html
+<section class="py-20 px-4 bg-gray-50 dark:bg-gray-900">
+  <div class="max-w-6xl mx-auto">
+    <h2
+      class="text-3xl font-bold text-center mb-12 
+               text-gray-900 dark:text-white"
+    >
+      Why Choose Us
+    </h2>
+    <div class="grid md:grid-cols-3 gap-8">
+      <!-- Card -->
+      <div
+        class="group bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 
+                  hover:shadow-xl transition-all hover:-translate-y-1"
+      >
+        <div
+          class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-xl 
+                    flex items-center justify-center mb-4
+                    group-hover:scale-110 transition-transform"
+        >
+          <span class="text-2xl">🚀</span>
+        </div>
+        <h3 class="font-bold text-xl mb-2 text-gray-900 dark:text-white">
+          Lightning Fast
+        </h3>
+        <p class="text-gray-600 dark:text-gray-300">
+          Optimized for performance with lazy loading and code splitting.
+        </p>
+      </div>
+      <!-- Repeat for more cards -->
+    </div>
+  </div>
+</section>
+```
+
+---
+
+## Part 2: Dashboard
+
+### Layout with Sidebar
+
+```html
+<div class="flex h-screen bg-gray-100 dark:bg-gray-900">
+  <!-- Sidebar -->
+  <aside class="hidden md:flex w-64 bg-gray-900 text-white flex-col">
+    <div class="p-4 border-b border-gray-800">
+      <h1 class="text-xl font-bold">Dashboard</h1>
+    </div>
+    <nav class="flex-1 p-4 space-y-2">
+      <a
+        href="#"
+        class="flex items-center gap-3 px-4 py-2 rounded-lg 
+                        bg-blue-600 text-white"
+      >
+        <span>📊</span> Overview
+      </a>
+      <a
+        href="#"
+        class="flex items-center gap-3 px-4 py-2 rounded-lg 
+                        hover:bg-gray-800 transition"
+      >
+        <span>📈</span> Analytics
+      </a>
+      <a
+        href="#"
+        class="flex items-center gap-3 px-4 py-2 rounded-lg 
+                        hover:bg-gray-800 transition"
+      >
+        <span>⚙️</span> Settings
+      </a>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="flex-1 overflow-auto">
+    <header
+      class="bg-white dark:bg-gray-800 shadow-sm p-4 
+                   flex justify-between items-center"
+    >
+      <h2 class="text-xl font-semibold text-gray-900 dark:text-white">
+        Overview
+      </h2>
+      <button class="md:hidden p-2 hover:bg-gray-100 rounded-lg">☰</button>
+    </header>
+
+    <div class="p-6">
+      <!-- Stats Cards -->
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow">
+          <p class="text-gray-500 dark:text-gray-400 text-sm">Total Users</p>
+          <p class="text-3xl font-bold text-gray-900 dark:text-white">12,345</p>
+          <p class="text-green-500 text-sm mt-2">↑ 12% from last month</p>
+        </div>
+        <!-- Repeat for more stats -->
+      </div>
+    </div>
+  </main>
+</div>
+```
+
+### Data Table
+
+```html
+<div class="bg-white dark:bg-gray-800 rounded-xl shadow overflow-hidden">
+  <table class="w-full">
+    <thead class="bg-gray-50 dark:bg-gray-700">
+      <tr>
+        <th
+          class="px-6 py-3 text-left text-xs font-medium 
+                   text-gray-500 dark:text-gray-300 uppercase"
+        >
+          Name
+        </th>
+        <th
+          class="px-6 py-3 text-left text-xs font-medium 
+                   text-gray-500 dark:text-gray-300 uppercase"
+        >
+          Status
+        </th>
+        <th
+          class="px-6 py-3 text-left text-xs font-medium 
+                   text-gray-500 dark:text-gray-300 uppercase"
+        >
+          Actions
+        </th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+      <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition">
+        <td class="px-6 py-4 text-gray-900 dark:text-white">John Doe</td>
+        <td class="px-6 py-4">
+          <span
+            class="px-2 py-1 text-xs rounded-full 
+                       bg-green-100 text-green-800 
+                       dark:bg-green-900 dark:text-green-200"
+          >
+            Active
+          </span>
+        </td>
+        <td class="px-6 py-4">
+          <button class="text-blue-500 hover:underline">Edit</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+```
+
+---
+
+## ✅ Concepts ที่ใช้ในโปรเจกต์
+
+| Concept        | ตำแหน่งที่ใช้                   |
+| -------------- | ------------------------------- |
+| Flexbox & Grid | Layout, Cards                   |
+| Responsive     | `md:`, `lg:` breakpoints        |
+| Dark Mode      | `dark:` ทุกที่                  |
+| Hover States   | Cards, Buttons, Links           |
+| Transitions    | `transition`, `hover:scale-105` |
+| Gradients      | Hero background                 |
+| Shadows        | Cards, Dropdowns                |
+| Typography     | Headings, Body text             |
+
+---
+
+## 🚀 Challenge
+
+ลองเพิ่มฟีเจอร์เหล่านี้:
+
+1. **Mobile Sidebar** - เพิ่ม hamburger menu สำหรับมือถือ
+2. **Modal Dialog** - popup สำหรับ confirm actions
+3. **Toast Notifications** - แจ้งเตือนมุมขวาบน
+4. **Loading States** - skeleton loading ด้วย `animate-pulse`

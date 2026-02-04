@@ -1,0 +1,243 @@
+---
+title: SVG Styling
+description: การใช้ fill, stroke และ stroke-width สำหรับ SVG
+---
+
+# SVG Styling
+
+## แนวคิด
+
+SVG utilities ช่วยให้ style icons และ graphics ด้วย Tailwind:
+
+- **fill** — สีเติมภายใน
+- **stroke** — สีเส้นขอบ
+- **stroke-width** — ความหนาเส้น
+
+> **Tip:** ใช้ `fill-current` หรือ `stroke-current` เพื่อให้ SVG ใช้ `text-*` color
+
+---
+
+## Fill
+
+กำหนดสีเติมภายใน SVG:
+
+```html
+<svg class="fill-blue-500">
+  <circle cx="50" cy="50" r="40" />
+</svg>
+
+<svg class="fill-current text-red-500">
+  <!-- ใช้ text color -->
+</svg>
+
+<svg class="fill-none">
+  <!-- โปร่งใส -->
+</svg>
+```
+
+---
+
+## Stroke
+
+กำหนดสีเส้นขอบ:
+
+```html
+<svg class="stroke-gray-500">
+  <line x1="0" y1="0" x2="100" y2="100" />
+</svg>
+
+<svg class="stroke-current text-blue-500">
+  <!-- ใช้ text color -->
+</svg>
+```
+
+---
+
+## Stroke Width
+
+กำหนดความหนาของเส้น:
+
+```html
+<svg class="stroke-1">...</svg>
+<!-- 1px -->
+<svg class="stroke-2">...</svg>
+<!-- 2px -->
+```
+
+| Class      | Width |
+| ---------- | ----- |
+| `stroke-0` | 0     |
+| `stroke-1` | 1     |
+| `stroke-2` | 2     |
+
+---
+
+## Icon Sizing
+
+ใช้ `w-*` และ `h-*` หรือ `size-*`:
+
+```html
+<svg class="w-4 h-4">...</svg>
+<!-- 1rem -->
+<svg class="w-5 h-5">...</svg>
+<!-- 1.25rem -->
+<svg class="w-6 h-6">...</svg>
+<!-- 1.5rem -->
+<svg class="size-6">...</svg>
+<!-- v4: width & height -->
+```
+
+---
+
+## Icon with Text
+
+```html
+<button class="flex items-center gap-2">
+  <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+    <path d="..." />
+  </svg>
+  <span>Button text</span>
+</button>
+```
+
+---
+
+## Hover Effects
+
+```html
+<svg class="w-6 h-6 fill-gray-400 hover:fill-blue-500 transition-colors">
+  ...
+</svg>
+
+<svg class="w-6 h-6 stroke-gray-400 hover:stroke-blue-500 transition-colors">
+  ...
+</svg>
+```
+
+---
+
+## Group Hover
+
+```html
+<button class="group flex items-center gap-2 hover:text-blue-500">
+  <svg class="w-5 h-5 fill-gray-400 group-hover:fill-blue-500 transition">
+    ...
+  </svg>
+  <span>Hover me</span>
+</button>
+```
+
+---
+
+## Rotate & Transform
+
+```html
+<svg class="w-6 h-6 hover:rotate-12 transition-transform">...</svg>
+
+<svg class="w-6 h-6 animate-spin">
+  <!-- Loading spinner -->
+</svg>
+```
+
+---
+
+## Dark Mode
+
+```html
+<svg class="fill-gray-900 dark:fill-white">...</svg>
+
+<!-- หรือ invert สำหรับ black icons -->
+<img src="/icon-black.svg" class="dark:invert" />
+```
+
+---
+
+## ตัวอย่างการใช้งาน
+
+### Icon Button
+
+```html
+<button class="p-2 rounded-lg hover:bg-gray-100 transition group">
+  <svg
+    class="w-5 h-5 fill-gray-500 group-hover:fill-blue-500 transition"
+    viewBox="0 0 20 20"
+  >
+    <path
+      d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+    />
+  </svg>
+</button>
+```
+
+### Logo with Hover
+
+```html
+<a href="/" class="group">
+  <svg
+    class="w-8 h-8 fill-gray-900 group-hover:fill-blue-500 
+              dark:fill-white transition-colors"
+  >
+    <!-- logo path -->
+  </svg>
+</a>
+```
+
+### Animated Loading Spinner
+
+```html
+<svg class="animate-spin w-5 h-5 text-blue-500" viewBox="0 0 24 24">
+  <circle
+    class="opacity-25"
+    cx="12"
+    cy="12"
+    r="10"
+    stroke="currentColor"
+    stroke-width="4"
+    fill="none"
+  />
+  <path
+    class="opacity-75"
+    fill="currentColor"
+    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+  />
+</svg>
+```
+
+### Social Icons
+
+```html
+<div class="flex gap-4">
+  <a href="#" class="text-gray-400 hover:text-blue-500 transition">
+    <svg class="w-6 h-6 fill-current"><!-- twitter --></svg>
+  </a>
+  <a href="#" class="text-gray-400 hover:text-pink-500 transition">
+    <svg class="w-6 h-6 fill-current"><!-- instagram --></svg>
+  </a>
+  <a
+    href="#"
+    class="text-gray-400 hover:text-gray-900 dark:hover:text-white transition"
+  >
+    <svg class="w-6 h-6 fill-current"><!-- github --></svg>
+  </a>
+</div>
+```
+
+---
+
+## Best Practices
+
+| Do ✅                                                   | Don't ❌                      |
+| ------------------------------------------------------- | ----------------------------- |
+| ใช้ `fill-current` + `text-*` สำหรับ single-color icons | Hard-code fill color          |
+| ใช้ `size-*` (v4) แทน `w-* h-*`                         | ใส่ width/height แยกเสมอ      |
+| ใช้ `transition` กับ color changes                      | เปลี่ยนสีทันทีไม่มี animation |
+| ใช้ `dark:invert` สำหรับ black icons                    | สร้าง icon 2 ชุด light/dark   |
+
+---
+
+## Tips
+
+1. **`fill-current` trick:** ใช้ `text-blue-500` แล้ว fill จะเป็น blue อัตโนมัติ
+2. **Icon libraries:** Heroicons, Lucide ออกแบบมาให้ใช้กับ Tailwind ได้ดี
+3. **Loading spinner:** ใช้ `animate-spin` + SVG circle/path
+4. **Accessibility:** อย่าลืมใส่ `aria-label` หรือ `<title>` ใน SVG สำหรับ screen readers

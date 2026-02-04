@@ -1,0 +1,182 @@
+---
+title: Tables
+description: การจัดการ styling ของตาราง
+---
+
+# Tables
+
+## แนวคิด
+
+ตารางใน Tailwind ใช้ HTML `<table>` ปกติ + utility classes สำหรับ:
+
+- จัดการ **border collapse/separate**
+- กำหนด **column widths**
+- ใส่ **zebra striping**
+- ทำ **sticky headers**
+
+> **Tip:** สำหรับตาราง data-heavy ให้พิจารณาใช้ library เช่น TanStack Table ร่วมกับ Tailwind
+
+---
+
+## Border Collapse vs Separate
+
+| Class             | Effect         |
+| ----------------- | -------------- |
+| `border-collapse` | Borders รวมกัน |
+| `border-separate` | Borders แยกกัน |
+
+```html
+<!-- Collapsed (default สำหรับเส้นเดียว) -->
+<table class="border-collapse">
+  <tr>
+    <td class="border border-gray-300 p-2">Cell 1</td>
+    <td class="border border-gray-300 p-2">Cell 2</td>
+  </tr>
+</table>
+
+<!-- Separate (มีช่องว่างระหว่าง cells) -->
+<table class="border-separate border-spacing-2">
+  <tr>
+    <td class="border border-gray-300 rounded p-2">Cell 1</td>
+    <td class="border border-gray-300 rounded p-2">Cell 2</td>
+  </tr>
+</table>
+```
+
+---
+
+## Border Spacing
+
+ใช้กับ `border-separate` เท่านั้น:
+
+| Class                | Spacing        |
+| -------------------- | -------------- |
+| `border-spacing-0`   | 0              |
+| `border-spacing-1`   | 0.25rem        |
+| `border-spacing-2`   | 0.5rem         |
+| `border-spacing-4`   | 1rem           |
+| `border-spacing-x-4` | 1rem แนวนอน    |
+| `border-spacing-y-2` | 0.5rem แนวตั้ง |
+
+---
+
+## Table Layout
+
+| Class         | CSS                   | Use Case                  |
+| ------------- | --------------------- | ------------------------- |
+| `table-auto`  | `table-layout: auto`  | ปรับตาม content (default) |
+| `table-fixed` | `table-layout: fixed` | ความกว้างคงที่            |
+
+```html
+<!-- Fixed: ทุก column กว้างเท่ากัน -->
+<table class="table-fixed w-full">
+  <thead>
+    <tr>
+      <th class="w-1/4">Name</th>
+      <th class="w-1/2">Description</th>
+      <th class="w-1/4">Price</th>
+    </tr>
+  </thead>
+</table>
+```
+
+---
+
+## Caption
+
+```html
+<table>
+  <caption class="caption-top text-gray-500 mb-2">
+    Top caption
+  </caption>
+  <!-- หรือ -->
+  <caption class="caption-bottom text-gray-500 mt-2">
+    Bottom caption
+  </caption>
+</table>
+```
+
+---
+
+## ตัวอย่าง Practical
+
+### Basic Data Table
+
+```html
+<div class="overflow-x-auto">
+  <table class="w-full border-collapse">
+    <thead class="bg-gray-50 dark:bg-gray-800">
+      <tr>
+        <th
+          class="border-b p-3 text-left text-sm font-semibold text-gray-900 dark:text-white"
+        >
+          Name
+        </th>
+        <th
+          class="border-b p-3 text-left text-sm font-semibold text-gray-900 dark:text-white"
+        >
+          Email
+        </th>
+        <th
+          class="border-b p-3 text-right text-sm font-semibold text-gray-900 dark:text-white"
+        >
+          Actions
+        </th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+      <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50">
+        <td class="p-3 text-gray-900 dark:text-white">John Doe</td>
+        <td class="p-3 text-gray-500">john@example.com</td>
+        <td class="p-3 text-right">
+          <button class="text-blue-500 hover:underline">Edit</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+```
+
+### Zebra Striping
+
+```html
+<tbody>
+  <tr class="odd:bg-white even:bg-gray-50">
+    ...
+  </tr>
+  <tr class="odd:bg-white even:bg-gray-50">
+    ...
+  </tr>
+  <tr class="odd:bg-white even:bg-gray-50">
+    ...
+  </tr>
+</tbody>
+```
+
+### Sticky Header
+
+```html
+<div class="max-h-64 overflow-y-auto">
+  <table class="w-full">
+    <thead class="sticky top-0 bg-white shadow-sm">
+      <tr>
+        <th class="p-3">Name</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Many rows -->
+    </tbody>
+  </table>
+</div>
+```
+
+---
+
+## Best Practices
+
+| Do ✅                                   | Don't ❌                        |
+| --------------------------------------- | ------------------------------- |
+| ใช้ `overflow-x-auto` สำหรับ responsive | ปล่อยให้ตารางกว้างเกิน viewport |
+| ใช้ `divide-y` แทน border ทุก row       | ใส่ border ทุก cell             |
+| ใช้ `sticky` สำหรับ header ตารางยาว     | ปล่อยให้ header scroll หายไป    |
+| ใช้ `text-left/right` จัด alignment     | ปล่อย default alignment         |

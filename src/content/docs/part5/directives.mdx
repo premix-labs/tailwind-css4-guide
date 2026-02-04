@@ -1,0 +1,130 @@
+---
+title: Functions & Directives
+description: การใช้ @apply, @layer และ directives อื่นๆ ใน Tailwind CSS 4
+---
+
+# Functions & Directives
+
+## @theme (v4 ใหม่!)
+
+กำหนด design tokens ใน CSS:
+
+```css
+@import "tailwindcss";
+
+@theme {
+  /* Colors */
+  --color-primary: #3b82f6;
+  --color-secondary: #8b5cf6;
+
+  /* Fonts */
+  --font-family-display: "Inter", sans-serif;
+
+  /* Spacing */
+  --spacing-18: 4.5rem;
+
+  /* Custom animation */
+  --animate-fade-in: fade-in 0.5s ease-out;
+}
+```
+
+---
+
+## @layer
+
+จัดการ CSS layers เพื่อควบคุม specificity:
+
+```css
+@layer base {
+  /* Reset และ base styles */
+  h1 {
+    @apply text-2xl font-bold;
+  }
+
+  a {
+    @apply text-blue-500 hover:underline;
+  }
+}
+
+@layer components {
+  /* Reusable components */
+  .btn {
+    @apply px-4 py-2 rounded-lg font-semibold transition-colors;
+  }
+
+  .card {
+    @apply bg-white rounded-lg shadow p-4;
+  }
+}
+
+@layer utilities {
+  /* Custom utilities */
+  .text-shadow {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  }
+}
+```
+
+---
+
+## @apply
+
+ใช้ utility classes ใน CSS:
+
+```css
+.btn-primary {
+  @apply bg-blue-500 text-white hover:bg-blue-600;
+}
+
+/* ใน v4 สามารถ compose ได้ */
+.btn-lg {
+  @apply btn px-6 py-3 text-lg;
+}
+```
+
+> **Warning:** อย่าใช้ `@apply` มากเกินไป - ใช้เฉพาะเมื่อต้องการ reuse หลายที่
+
+---
+
+## @variant (v4 ใหม่!)
+
+สร้าง custom variants:
+
+```css
+/* Dark mode ด้วย class */
+@variant dark (&:where(.dark, .dark *));
+
+/* Custom variant สำหรับ RTL */
+@variant rtl (&:where([dir="rtl"], [dir="rtl"] *));
+```
+
+ใช้งาน:
+
+```html
+<div class="rtl:text-right">Right-aligned in RTL</div>
+```
+
+---
+
+## @source (v4 ใหม่!)
+
+บอก Tailwind ให้ scan ไฟล์เพิ่มเติม:
+
+```css
+@import "tailwindcss";
+
+/* Scan components ใน packages อื่น */
+@source "../node_modules/my-ui-lib/components";
+```
+
+---
+
+## เมื่อไหร่ใช้อะไร
+
+| ต้องการ                   | ใช้                 |
+| ------------------------- | ------------------- |
+| กำหนด design tokens       | `@theme`            |
+| สร้าง component class     | `@layer components` |
+| เพิ่ม utility ใหม่        | `@layer utilities`  |
+| ใช้ utilities ใน CSS      | `@apply`            |
+| สร้าง conditional variant | `@variant`          |

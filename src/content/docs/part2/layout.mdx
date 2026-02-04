@@ -1,0 +1,153 @@
+---
+title: Layout
+description: การจัดการ display, position, overflow และ object-fit
+---
+
+# Layout
+
+## Display
+
+| Class          | CSS                     |
+| -------------- | ----------------------- |
+| `block`        | `display: block`        |
+| `inline`       | `display: inline`       |
+| `inline-block` | `display: inline-block` |
+| `flex`         | `display: flex`         |
+| `inline-flex`  | `display: inline-flex`  |
+| `grid`         | `display: grid`         |
+| `inline-grid`  | `display: inline-grid`  |
+| `hidden`       | `display: none`         |
+| `contents`     | `display: contents`     |
+
+---
+
+## Position
+
+| Class      | CSS                  |
+| ---------- | -------------------- |
+| `static`   | `position: static`   |
+| `relative` | `position: relative` |
+| `absolute` | `position: absolute` |
+| `fixed`    | `position: fixed`    |
+| `sticky`   | `position: sticky`   |
+
+### Inset (Top/Right/Bottom/Left)
+
+```html
+<div class="absolute inset-0">เต็มพื้นที่ parent</div>
+<div class="absolute inset-x-0 top-0">เต็มแนวนอน ชิดบน</div>
+<div class="absolute inset-y-0 right-0">เต็มแนวตั้ง ชิดขวา</div>
+```
+
+| Class       | Effect                   |
+| ----------- | ------------------------ |
+| `inset-0`   | top/right/bottom/left: 0 |
+| `inset-x-0` | left: 0; right: 0        |
+| `inset-y-0` | top: 0; bottom: 0        |
+| `top-0`     | top: 0                   |
+| `right-4`   | right: 1rem              |
+| `bottom-4`  | bottom: 1rem             |
+| `left-1/2`  | left: 50%                |
+| `-top-4`    | top: -1rem (negative)    |
+
+---
+
+## Z-Index
+
+```html
+<div class="relative z-10">Above</div>
+<div class="relative z-0">Below</div>
+<div class="relative z-50">Much higher</div>
+<div class="relative -z-10">Behind (negative)</div>
+```
+
+| Class    | Value |
+| -------- | ----- |
+| `z-0`    | 0     |
+| `z-10`   | 10    |
+| `z-20`   | 20    |
+| `z-50`   | 50    |
+| `z-auto` | auto  |
+
+---
+
+## Overflow
+
+```html
+<div class="overflow-hidden">ซ่อนส่วนเกิน</div>
+<div class="overflow-auto">scroll เมื่อจำเป็น</div>
+<div class="overflow-x-auto">scroll แนวนอน</div>
+<div class="overflow-y-scroll">scroll แนวตั้งเสมอ</div>
+```
+
+| Class              | Effect                    |
+| ------------------ | ------------------------- |
+| `overflow-auto`    | scroll เมื่อจำเป็น        |
+| `overflow-hidden`  | ซ่อนส่วนเกิน              |
+| `overflow-scroll`  | scroll เสมอ               |
+| `overflow-visible` | แสดงส่วนเกิน (default)    |
+| `overflow-x-auto`  | scroll แนวนอนเมื่อจำเป็น  |
+| `overflow-y-auto`  | scroll แนวตั้งเมื่อจำเป็น |
+
+---
+
+## Object Fit & Position
+
+สำหรับ `<img>` และ `<video>`:
+
+```html
+<img class="w-full h-48 object-cover" src="..." />
+<img class="w-full h-48 object-contain" src="..." />
+<img class="object-cover object-top" src="..." />
+```
+
+| Class            | Effect                 |
+| ---------------- | ---------------------- |
+| `object-contain` | ย่อให้พอดี ไม่ crop    |
+| `object-cover`   | ขยายเต็ม crop ส่วนเกิน |
+| `object-fill`    | ยืดให้เต็ม             |
+| `object-none`    | ขนาดจริง               |
+| `object-center`  | จัดกึ่งกลาง            |
+| `object-top`     | ชิดบน                  |
+| `object-bottom`  | ชิดล่าง                |
+
+---
+
+## Visibility
+
+```html
+<div class="invisible">ยังใช้พื้นที่ แต่มองไม่เห็น</div>
+<div class="visible">แสดงปกติ</div>
+<div class="collapse">สำหรับ table rows</div>
+```
+
+---
+
+## ตัวอย่างการใช้งาน
+
+### Sticky Header
+
+```html
+<header class="sticky top-0 z-50 bg-white shadow">Navigation</header>
+```
+
+### Overlay
+
+```html
+<div class="fixed inset-0 bg-black/50 z-40">
+  <!-- backdrop -->
+</div>
+<div class="fixed inset-x-4 top-1/2 -translate-y-1/2 z-50 bg-white rounded-lg">
+  <!-- modal -->
+</div>
+```
+
+### Card with Image
+
+```html
+<div class="relative overflow-hidden rounded-lg">
+  <img class="w-full h-48 object-cover" src="..." />
+  <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+  <h3 class="absolute bottom-4 left-4 text-white font-bold">Title</h3>
+</div>
+```

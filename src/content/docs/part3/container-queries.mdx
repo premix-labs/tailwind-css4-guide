@@ -1,0 +1,206 @@
+---
+title: Container Queries
+description: การใช้ @container สำหรับ component-based responsive design
+sidebar:
+  order: 16
+---
+
+# Container Queries (v4!)
+
+## แนวคิด
+
+**Container Queries** ช่วยให้ style element ตาม **ขนาด parent** แทนที่จะเป็น viewport
+
+> **ทำไมสำคัญ?**
+>
+> - Responsive breakpoints (`md:`, `lg:`) ดูขนาด viewport
+> - Container queries ดูขนาด container → ดีกว่าสำหรับ **reusable components**
+
+---
+
+## การใช้งานพื้นฐาน
+
+### 1. กำหนด Container
+
+```html
+<div class="@container">
+  <!-- children จะ respond ตามขนาด container นี้ -->
+</div>
+
+<!-- Named container -->
+<div class="@container/main">...</div>
+```
+
+### 2. ใช้ Container Breakpoints
+
+```html
+<div class="@container">
+  <div class="block @md:flex @lg:grid @lg:grid-cols-3">
+    <!-- 
+      - default: block
+      - container ≥ 28rem: flex
+      - container ≥ 32rem: grid 3 columns
+    -->
+  </div>
+</div>
+```
+
+---
+
+## Container Breakpoints
+
+| Prefix  | Min-width | Description |
+| ------- | --------- | ----------- |
+| `@xs:`  | 20rem     | 320px       |
+| `@sm:`  | 24rem     | 384px       |
+| `@md:`  | 28rem     | 448px       |
+| `@lg:`  | 32rem     | 512px       |
+| `@xl:`  | 36rem     | 576px       |
+| `@2xl:` | 42rem     | 672px       |
+| `@3xl:` | 48rem     | 768px       |
+| `@4xl:` | 56rem     | 896px       |
+| `@5xl:` | 64rem     | 1024px      |
+
+---
+
+## Named Containers
+
+ใช้เมื่อมี nested containers:
+
+```html
+<div class="@container/sidebar">
+  <div class="@container/card">
+    <p class="@lg/sidebar:text-lg @md/card:font-bold">
+      <!-- respond ตาม container ที่ระบุ -->
+    </p>
+  </div>
+</div>
+```
+
+---
+
+## Container Types
+
+```html
+<!-- Size queries (default) -->
+<div class="@container">...</div>
+
+<!-- Inline-size only (width) -->
+<div class="@container/[inline-size]">...</div>
+
+<!-- Normal (both axes) -->
+<div class="@container/[normal]">...</div>
+```
+
+---
+
+## ตัวอย่าง Practical
+
+### Reusable Card Component
+
+```html
+<!-- Card ที่ปรับตามขนาด container -->
+<div class="@container">
+  <article class="@md:flex gap-4 p-4 bg-white rounded-lg shadow">
+    <img class="w-full @md:w-48 aspect-video object-cover rounded" src="..." />
+    <div class="mt-4 @md:mt-0">
+      <h3 class="text-lg @lg:text-xl font-bold">Title</h3>
+      <p class="text-gray-600 @lg:text-lg">Description</p>
+      <button
+        class="mt-4 w-full @md:w-auto px-4 py-2 bg-blue-500 text-white rounded"
+      >
+        Action
+      </button>
+    </div>
+  </article>
+</div>
+```
+
+### ใช้งาน Card ใน Layout ต่างๆ
+
+```html
+<!-- ใน sidebar (แคบ) → card แสดง vertical -->
+<aside class="w-64">
+  <div class="@container">
+    <!-- Card component -->
+  </div>
+</aside>
+
+<!-- ใน main content (กว้าง) → card แสดง horizontal -->
+<main class="flex-1">
+  <div class="@container">
+    <!-- Card component เดิม แต่แสดงต่างออกไป -->
+  </div>
+</main>
+```
+
+### Dashboard Widget
+
+```html
+<div class="@container">
+  <div class="p-4 bg-white rounded-xl shadow">
+    <!-- Small: stack -->
+    <!-- Large: side by side -->
+    <div class="@lg:flex @lg:items-center @lg:justify-between">
+      <div>
+        <p class="text-gray-500 text-sm">Total Revenue</p>
+        <p class="text-2xl @xl:text-3xl font-bold">$45,231</p>
+      </div>
+      <div class="mt-4 @lg:mt-0">
+        <span class="text-green-500 text-sm">↑ 12.5%</span>
+      </div>
+    </div>
+
+    <!-- Chart placeholder -->
+    <div class="mt-4 h-32 @xl:h-48 bg-gray-100 rounded" />
+  </div>
+</div>
+```
+
+---
+
+## Container Queries vs Media Queries
+
+| Feature  | Media Queries (`md:`) | Container Queries (`@md:`) |
+| -------- | --------------------- | -------------------------- |
+| Based on | Viewport width        | Container width            |
+| Use case | Page layout           | Component design           |
+| Reusable | ❌ ขึ้นกับตำแหน่ง     | ✅ ใช้ได้ทุกที่            |
+| Nesting  | N/A                   | ✅ Named containers        |
+
+---
+
+## Custom Container Breakpoints
+
+```css
+@theme {
+  --container-3xs: 16rem;
+  --container-2xs: 18rem;
+  --container-6xl: 72rem;
+}
+```
+
+```html
+<div class="@container">
+  <p class="@3xs:text-sm @6xl:text-2xl">Custom breakpoints</p>
+</div>
+```
+
+---
+
+## Best Practices
+
+| Do ✅                             | Don't ❌                     |
+| --------------------------------- | ---------------------------- |
+| ใช้กับ reusable components        | ใช้กับ page-level layout     |
+| ใช้ named containers เมื่อ nested | สร้าง container ทุก element  |
+| ใช้กับ cards, widgets, sidebars   | แทนที่ media queries ทั้งหมด |
+| Test component ในหลาย sizes       | Assume มันจะ work ทุกที่     |
+
+---
+
+## Tips
+
+1. **Container queries ไม่ได้แทน media queries** — ใช้ร่วมกัน
+2. **Performance:** Container มี overhead เล็กน้อย — ใช้เมื่อจำเป็น
+3. **Debugging:** ใช้ browser devtools resize container ดู

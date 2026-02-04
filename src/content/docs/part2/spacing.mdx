@@ -1,0 +1,116 @@
+---
+title: Spacing
+description: การใช้ padding และ margin ใน Tailwind CSS 4
+---
+
+# Spacing
+
+## แนวคิด
+
+Spacing คือพื้นฐานสำคัญของ layout — ทุก UI ต้องมี **padding** (พื้นที่ภายใน) และ **margin** (พื้นที่ภายนอก)
+
+> **Tailwind Scale:** ค่า 1 = 0.25rem (4px), ดังนั้น `p-4` = 16px
+
+---
+
+## Padding
+
+| Class  | CSS                                       |
+| ------ | ----------------------------------------- |
+| `p-0`  | `padding: 0`                              |
+| `p-1`  | `padding: 0.25rem` (4px)                  |
+| `p-2`  | `padding: 0.5rem` (8px)                   |
+| `p-4`  | `padding: 1rem` (16px)                    |
+| `p-8`  | `padding: 2rem` (32px)                    |
+| `px-4` | `padding-left: 1rem; padding-right: 1rem` |
+| `py-4` | `padding-top: 1rem; padding-bottom: 1rem` |
+| `pt-4` | `padding-top: 1rem`                       |
+| `pb-4` | `padding-bottom: 1rem`                    |
+
+---
+
+## Margin
+
+| Class     | CSS                                     |
+| --------- | --------------------------------------- |
+| `m-0`     | `margin: 0`                             |
+| `m-4`     | `margin: 1rem`                          |
+| `mx-auto` | `margin-left: auto; margin-right: auto` |
+| `-m-4`    | `margin: -1rem` (negative margin)       |
+| `mt-4`    | `margin-top: 1rem`                      |
+| `mb-4`    | `margin-bottom: 1rem`                   |
+
+---
+
+## Space Between
+
+ใช้จัดระยะห่างระหว่าง children:
+
+```html
+<div class="flex space-x-4">
+  <div>Item 1</div>
+  <div>Item 2</div>
+  <div>Item 3</div>
+</div>
+```
+
+| Class       | Effect                       |
+| ----------- | ---------------------------- |
+| `space-x-4` | ระยะห่างแนวนอน 1rem          |
+| `space-y-4` | ระยะห่างแนวตั้ง 1rem         |
+| `gap-4`     | ใช้กับ flex/grid (แนะนำกว่า) |
+
+---
+
+## ตัวอย่าง Practical
+
+### Card Component
+
+```html
+<div class="p-6 m-4 bg-white rounded-lg shadow">
+  <h2 class="mb-4 text-xl font-bold">Card Title</h2>
+  <p class="mt-2">Content here</p>
+</div>
+```
+
+### Navbar with Auto Margins
+
+```html
+<nav class="flex items-center p-4">
+  <div class="font-bold">Logo</div>
+  <div class="ml-auto flex gap-4">
+    <a href="#">Home</a>
+    <a href="#">About</a>
+  </div>
+</nav>
+```
+
+### Section Spacing
+
+```html
+<section class="py-16 px-4 md:px-8">
+  <div class="max-w-4xl mx-auto">
+    <!-- Content -->
+  </div>
+</section>
+```
+
+---
+
+## Best Practices
+
+| Do ✅                                     | Don't ❌                 |
+| ----------------------------------------- | ------------------------ |
+| ใช้ `gap-*` กับ flex/grid                 | ใช้ `space-*` ทุกที่     |
+| ใช้ consistent spacing (4, 8, 16, 24, 32) | ผสมค่า random (5, 7, 13) |
+| ใช้ `mx-auto` กับ `max-w-*` เพื่อ center  | Hard-code margin values  |
+| ใช้ negative margin เมื่อจำเป็น           | Overuse negative margin  |
+
+---
+
+## Tips
+
+1. **gap vs space-x:** `gap-*` ทำงานกับ flex/grid เท่านั้น แต่ดีกว่า `space-x` เพราะไม่ต้องกังวล `:first-child` margin
+2. **ใช้ scale ที่ consistent:** ยึด 4px grid (p-1, p-2, p-4, p-6, p-8...)
+3. **`mx-auto` อย่าลืม width:** ต้องมี `max-w-*` หรือ `w-*` ด้วย
+4. **Negative margin trick:** `-m-4` + `p-4` บน parent = full-bleed children

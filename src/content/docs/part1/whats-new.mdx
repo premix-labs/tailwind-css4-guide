@@ -1,0 +1,135 @@
+---
+title: What's New in v4
+description: ฟีเจอร์ใหม่ใน Tailwind CSS 4 - Oxide Engine และ CSS-first configuration
+---
+
+# What's New in v4
+
+## แนวคิด
+
+Tailwind CSS 4 เป็น **การเขียนใหม่ตั้งแต่ต้น** ที่เน้น:
+
+- **Performance** — เร็วขึ้นหลายเท่า
+- **Simplicity** — config ง่ายขึ้น
+- **CSS Standards** — ใช้ CSS ล้วนๆ ไม่พึ่ง JS
+
+---
+
+## 1. Oxide Engine
+
+Engine ใหม่ที่เขียนด้วย Rust ทำให้:
+
+- **เร็วขึ้นอย่างมาก** ในการ build (ทีม Tailwind Labs ระบุว่าเร็วกว่าเดิมหลายเท่า)
+- ใช้หน่วยความจำน้อยลง
+- Incremental builds ทำงานได้ดีขึ้น
+
+```bash
+# Build time comparison
+v3: ~500ms (cold start)
+v4: ~50ms  (cold start) 🚀
+```
+
+---
+
+## 2. CSS-first Configuration
+
+บอกลา `tailwind.config.js` ยินดีต้อนรับ `@theme` block
+
+### ก่อน (v3)
+
+```js
+// tailwind.config.js
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        primary: "#3490dc",
+      },
+    },
+  },
+};
+```
+
+### หลัง (v4)
+
+```css
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #3490dc;
+}
+```
+
+> **ข้อดี:** ไม่ต้อง restart dev server เมื่อเปลี่ยน theme!
+
+---
+
+## 3. Native CSS Variables
+
+ทุก design token เป็น CSS Variable โดยอัตโนมัติ
+
+```css
+/* สามารถใช้ใน CSS ปกติได้เลย */
+.custom-element {
+  color: var(--color-primary);
+  padding: var(--spacing-4);
+}
+```
+
+---
+
+## 4. OKLCH Colors
+
+Tailwind v4 ใช้ OKLCH เป็น default color format
+
+```css
+/* ทำไมดีกว่า? */
+/* - สีสม่ำเสมอกว่า hex/rgb */
+/* - ปรับความสว่างได้ง่าย */
+/* - รองรับ P3 color gamut */
+```
+
+---
+
+## 5. Container Queries (Built-in!)
+
+ไม่ต้องติดตั้ง plugin อีกต่อไป:
+
+```html
+<div class="@container">
+  <p class="@md:text-lg">Responds to container size!</p>
+</div>
+```
+
+---
+
+## สิ่งที่เปลี่ยนแปลง
+
+| Feature           | v3                     | v4                      |
+| ----------------- | ---------------------- | ----------------------- |
+| Configuration     | `tailwind.config.js`   | `@theme` block ใน CSS   |
+| Color format      | Hex, RGB               | OKLCH (default)         |
+| Import            | `@tailwind base;` etc. | `@import "tailwindcss"` |
+| Container queries | Plugin                 | Built-in                |
+| Performance       | ~500ms                 | ~50ms 🚀                |
+| Engine            | JavaScript             | Rust (Oxide)            |
+
+---
+
+## Best Practices สำหรับ v4
+
+| Do ✅                             | Don't ❌                      |
+| --------------------------------- | ----------------------------- |
+| ใช้ `@theme` สำหรับ custom values | สร้าง `tailwind.config.js`    |
+| ใช้ `@import "tailwindcss"`       | ใช้ `@tailwind base;` แยก     |
+| ใช้ Container Queries             | ติดตั้ง container plugin      |
+| ใช้ OKLCH สำหรับสีใหม่            | แปลงสีเก่าทั้งหมด (ไม่จำเป็น) |
+
+---
+
+## Tips for Migrating
+
+1. **เริ่มจาก project ใหม่** — ลองใน project เล็กๆ ก่อน
+2. **ไม่ต้องรีบแปลงสี** — hex/rgb ยังใช้ได้
+3. **Container Queries ฟรี!** — ลบ plugin เก่าทิ้งได้
+4. **IDE Update** — ตรวจว่า IntelliSense extension เป็น version ล่าสุด

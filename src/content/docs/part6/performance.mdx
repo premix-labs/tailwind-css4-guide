@@ -1,0 +1,230 @@
+---
+title: Performance & Optimization
+description: เทคนิคการ optimize Tailwind CSS สำหรับ production
+sidebar:
+  order: 22
+---
+
+# Performance & Optimization
+
+## แนวคิด
+
+Tailwind CSS 4 มี **Oxide Engine** ที่เร็วมาก แต่ยังมีเทคนิคเพิ่มเติมสำหรับ production
+
+---
+
+## 1. Automatic CSS Purging
+
+Tailwind v4 **purge อัตโนมัติ** — เฉพาะ classes ที่ใช้จริงเท่านั้นที่จะอยู่ใน CSS
+
+### ก่อน purge
+
+```
+~15MB+ (ทุก utilities)
+```
+
+### หลัง purge (production)
+
+```
+~10-30KB (เฉพาะที่ใช้)
+```
+
+> **ไม่ต้องทำอะไร** — Oxide Engine จัดการให้อัตโนมัติ
+
+---
+
+## 2. Content Detection
+
+Tailwind scan ไฟล์เหล่านี้โดยอัตโนมัติ:
+
+- `*.html`
+- `*.js`, `*.jsx`, `*.ts`, `*.tsx`
+- `*.vue`, `*.svelte`, `*.astro`
+- `*.mdx`
+
+### เพิ่ม paths เอง
+
+```css
+@import "tailwindcss";
+
+/* Scan ไฟล์เพิ่มเติม */
+@source "../node_modules/my-ui-lib/components";
+@source "../content/**/*.md";
+```
+
+---
+
+## 3. Avoid Dynamic Class Names
+
+### ❌ ไม่ดี (ไม่ถูก detect)
+
+```jsx
+// Tailwind จะไม่เห็น class นี้!
+const color = isActive ? "blue" : "gray";
+<div className={`bg-${color}-500`}>...</div>;
+```
+
+### ✅ ดี (ถูก detect)
+
+```jsx
+// เขียนเต็มๆ
+<div className={isActive ? "bg-blue-500" : "bg-gray-500"}>...</div>
+```
+
+### ✅ ดีกว่า (ใช้ object mapping)
+
+```jsx
+const colorMap = {
+  primary: "bg-blue-500 text-white",
+  secondary: "bg-gray-500 text-white",
+  danger: "bg-red-500 text-white",
+};
+
+<div className={colorMap[variant]}>...</div>;
+```
+
+---
+
+## 4. Caching & Build Performance
+
+### Development
+
+```bash
+# Oxide Engine เร็วมาก
+# Incremental builds: ~5ms
+```
+
+### Production Build
+
+```bash
+npm run build
+
+# Typical output:
+# CSS: 25KB (gzipped: 6KB)
+# Build time: <1s
+```
+
+---
+
+## 5. CSS-in-JS Alternative
+
+ถ้าใช้ library ที่สร้าง CSS dynamically:
+
+```jsx
+// ❌ Avoid runtime CSS generation
+import styled from "styled-components";
+
+// ✅ Use Tailwind classes instead
+<div className="bg-blue-500 hover:bg-blue-600" />;
+```
+
+> **เหตุผล:** Tailwind generates CSS at build time = 0 runtime cost
+
+---
+
+## 6. Browser Caching
+
+### Long-term Caching
+
+```js
+// vite.config.js
+export default {
+  build: {
+    cssCodeSplit: true,
+    rollupOptions: {
+      output: {
+        assetFileNames: "assets/[name].[hash].[ext]",
+      },
+    },
+  },
+};
+```
+
+---
+
+## 7. Critical CSS
+
+สำหรับ pages ที่ต้องการ performance สูงสุด:
+
+```html
+<head>
+  <!-- Inline critical CSS -->
+  <style>
+    /* Critical above-the-fold styles */
+  </style>
+
+  <!-- Lazy load full CSS -->
+  <link
+    rel="preload"
+    href="/styles.css"
+    as="style"
+    onload="this.onload=null;this.rel='stylesheet'"
+  />
+</head>
+```
+
+---
+
+## 8. Bundle Analysis
+
+### ตรวจสอบ CSS Size
+
+```bash
+# After build
+ls -la dist/assets/*.css
+
+# หรือใช้ gzip size
+gzip -c dist/assets/style.css | wc -c
+```
+
+### เป้าหมาย
+
+| Metric          | Target |
+| --------------- | ------ |
+| CSS size (raw)  | < 50KB |
+| CSS size (gzip) | < 10KB |
+| Build time      | < 2s   |
+
+---
+
+## 9. Reduce Unused CSS ใน Libraries
+
+ถ้าใช้ UI library:
+
+```css
+/* Import เฉพาะที่ใช้ */
+@source "../node_modules/my-lib/components/Button";
+@source "../node_modules/my-lib/components/Modal";
+```
+
+---
+
+## 10. Performance Checklist
+
+| Item                           | Status |
+| ------------------------------ | ------ |
+| ใช้ Tailwind v4 (Oxide Engine) | ☐      |
+| ไม่มี dynamic class names      | ☐      |
+| CSS gzipped < 10KB             | ☐      |
+| Build time < 2s                | ☐      |
+| ใช้ CSS caching                | ☐      |
+| Remove unused @source paths    | ☐      |
+
+---
+
+## Best Practices
+
+| Do ✅                              | Don't ❌                         |
+| ---------------------------------- | -------------------------------- |
+| เขียน class names เต็มๆ            | ใช้ template strings สร้าง class |
+| ใช้ object mapping สำหรับ variants | ทำ string concatenation          |
+| ลบ @source ที่ไม่ใช้               | Keep paths ที่ไม่จำเป็น          |
+| Check bundle size หลัง build       | Assume มันเล็กอยู่แล้ว           |
+
+---
+
+## Tips
+
+1. **Tailwind v4 เร็วมาก** — ส่วนใหญ่ไม่ต้อง optimize อะไรเลย
+2. **Focus on code patterns** — หลีกเลี่ยง dynamic classes
+3. **Measure before optimize** — ตรวจ actual bundle size ก่อน

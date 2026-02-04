@@ -1,0 +1,181 @@
+---
+title: Adding Custom Styles
+description: วิธีเพิ่ม CSS เองเมื่อ Tailwind utilities ไม่พอ
+---
+
+# Adding Custom Styles
+
+## แนวคิด
+
+Tailwind ครอบคลุม 95%+ ของ use cases แต่บางครั้งคุณต้องการ:
+
+- **ค่าเฉพาะ** เช่น `117px` หรือ `#bada55`
+- **CSS property ที่ไม่มี utility** เช่น `clip-path`
+- **Pseudo-elements** (`::before`, `::after`)
+
+---
+
+## Arbitrary Values (ค่าที่กำหนดเอง)
+
+ใช้ `[...]` syntax สำหรับค่าที่ไม่มี utility:
+
+```html
+<!-- Exact pixel values -->
+<div class="top-[117px]">Exact positioning</div>
+<div class="w-[300px]">Exact width</div>
+<div class="h-[calc(100vh-64px)]">Calculated height</div>
+
+<!-- Custom colors -->
+<div class="bg-[#bada55]">Custom hex color</div>
+<div class="text-[rgb(255,100,50)]">RGB color</div>
+<div class="bg-[oklch(0.7_0.15_200)]">OKLCH color</div>
+
+<!-- Calculations -->
+<div class="w-[calc(100%-2rem)]">Calc width</div>
+<div class="grid-cols-[1fr_2fr_1fr]">Custom grid</div>
+
+<!-- URLs -->
+<div class="bg-[url('/hero.jpg')]">Background image</div>
+```
+
+---
+
+## Arbitrary Properties
+
+สำหรับ CSS properties ที่ไม่มี utility:
+
+```html
+<div class="[clip-path:circle(50%)]">Clipped circle</div>
+<div class="[mask-image:linear-gradient(black,transparent)]">Masked</div>
+<div class="[writing-mode:vertical-rl]">Vertical text</div>
+```
+
+---
+
+## Arbitrary Variants
+
+สำหรับ selectors ที่ไม่มี modifier:
+
+```html
+<!-- nth-child -->
+<li class="[&:nth-child(3)]:underline">Third item underlined</li>
+
+<!-- Attribute selectors -->
+<input class="[&[type=number]]:appearance-none" type="number" />
+
+<!-- Child selector -->
+<div class="[&>*]:p-4">All direct children have padding</div>
+
+<!-- :has() -->
+<div class="[&:has(input:focus)]:ring-2">Ring when child input focused</div>
+```
+
+---
+
+## Custom CSS ในไฟล์ CSS
+
+เมื่อ arbitrary values ไม่พอ:
+
+```css
+/* src/styles/global.css */
+@import "tailwindcss";
+
+/* Custom CSS property ที่ไม่มี utility */
+.custom-clip {
+  clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+}
+
+/* Pseudo-elements */
+.required-label::after {
+  content: " *";
+  color: theme(colors.red.500);
+}
+
+/* Custom animation ที่ซับซ้อน */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+```
+
+---
+
+## เมื่อไหร่ใช้อะไร?
+
+| Situation                 | Solution               |
+| ------------------------- | ---------------------- |
+| ค่าเฉพาะ เช่น `137px`     | `w-[137px]`            |
+| สีที่ไม่มีใน palette      | `bg-[#ff5500]`         |
+| CSS calc                  | `h-[calc(100vh-4rem)]` |
+| Property ที่ไม่มี utility | `[clip-path:...]`      |
+| Pseudo-elements           | เขียน CSS ปกติ         |
+| Animation ซับซ้อน         | `@keyframes` ใน CSS    |
+| ต้องใช้หลายที่ซ้ำกัน      | สร้าง @theme variable  |
+
+---
+
+## ตัวอย่าง Practical
+
+### Hero Section with Clip Path
+
+```html
+<section
+  class="relative bg-blue-500 [clip-path:polygon(0_0,100%_0,100%_85%,0_100%)]"
+>
+  <div class="container mx-auto py-20 px-4">
+    <h1 class="text-4xl font-bold text-white">Welcome</h1>
+  </div>
+</section>
+```
+
+### Required Field Label
+
+```css
+/* CSS file */
+.required::after {
+  content: " *";
+  @apply text-red-500;
+}
+```
+
+```html
+<label class="required">Email</label>
+```
+
+### Custom Grid
+
+```html
+<div class="grid grid-cols-[200px_1fr_200px] gap-4">
+  <aside>Sidebar</aside>
+  <main>Content</main>
+  <aside>Right Sidebar</aside>
+</div>
+```
+
+---
+
+## Best Practices
+
+| Do ✅                               | Don't ❌                   |
+| ----------------------------------- | -------------------------- |
+| ใช้ arbitrary values เมื่อจำเป็น    | ใช้ `style=""` inline      |
+| ใช้ @theme สำหรับค่าที่ซ้ำกัน       | ใช้ `[...]` ค่าเดิมหลายที่ |
+| ใช้ CSS file สำหรับ pseudo-elements | พยายาม hack ด้วย arbitrary |
+| ใช้ theme() function ใน CSS         | hardcode ค่าสีใน CSS       |
+
+---
+
+## Tips
+
+1. **Escape spaces** ใน arbitrary values: `bg-[url('/my%20image.jpg')]`
+2. **ใช้ underscore แทน space** ใน calc: `h-[calc(100vh_-_4rem)]`
+3. **Check docs ก่อน** - utility ที่คุณต้องการอาจมีอยู่แล้ว

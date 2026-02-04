@@ -1,0 +1,82 @@
+---
+title: Preflight
+description: ทำความเข้าใจ CSS Reset ที่ Tailwind ทำให้อัตโนมัติ
+---
+
+# Preflight
+
+## Preflight คืออะไร?
+
+**Preflight** คือ CSS Reset ที่ Tailwind ใส่ให้อัตโนมัติ เพื่อทำให้การ styling เริ่มจาก "หน้ากระดาษเปล่า" ที่เหมือนกันทุก browser
+
+> **ทำไมต้องมี?** แต่ละ browser มี default styles ต่างกัน เช่น `<h1>` ใน Chrome อาจมี margin ต่างจาก Firefox — Preflight ลบความแตกต่างเหล่านี้
+
+---
+
+## Preflight ทำอะไรบ้าง?
+
+| สิ่งที่ทำ                          | เหตุผล                         |
+| ---------------------------------- | ------------------------------ |
+| ลบ default margin ทุก element      | เริ่มจาก 0 ทุกที่ ควบคุมง่าย   |
+| ลบ style จาก headings, lists       | ใช้ utility classes กำหนดเอง   |
+| `img, video` เป็น `display: block` | ป้องกัน spacing แปลกๆ          |
+| `border-style: solid`              | พิมพ์แค่ `border` ก็ใช้ได้     |
+| ใช้ `box-sizing: border-box`       | คำนวณ width รวม padding/border |
+
+---
+
+## ตัวอย่าง
+
+### ก่อน vs หลัง Preflight
+
+```html
+<!-- ก่อน Preflight -->
+<h1>Hello</h1>
+<!-- มี margin, font-size ใหญ่ จาก browser -->
+
+<!-- หลัง Preflight -->
+<h1>Hello</h1>
+<!-- ไม่มี style ใดๆ ต้องใส่เอง -->
+
+<!-- ใน Tailwind ต้องเขียนแบบนี้ -->
+<h1 class="text-3xl font-bold mb-4">Hello</h1>
+```
+
+### Form Elements
+
+```html
+<!-- Preflight normalize form elements -->
+<input class="border rounded px-3 py-2" placeholder="Styled input" />
+<button class="bg-blue-500 text-white px-4 py-2 rounded">Button</button>
+```
+
+---
+
+## การปิด Preflight (ไม่แนะนำ)
+
+ถ้าต้องการปิด Preflight ใน v4:
+
+```css
+@import "tailwindcss" layer(utilities);
+/* จะ import แค่ utilities ไม่มี base/preflight */
+```
+
+> **Warning:** ปิด Preflight อาจทำให้ต้องเขียน reset CSS เอง
+
+---
+
+## Best Practices
+
+| Do ✅                                    | Don't ❌                         |
+| ---------------------------------------- | -------------------------------- |
+| เข้าใจว่า Preflight ลบ default styles    | คาดหวังว่า `<h1>` จะใหญ่อยู่แล้ว |
+| ใส่ utility ทุก element ที่ต้องการ style | ลืมใส่ style แล้วสงสัยทำไมไม่มี  |
+| ใช้ `@layer base` เพิ่ม base styles      | ปิด Preflight ทั้งหมด            |
+
+---
+
+## Tips สำหรับผู้เริ่มต้น
+
+1. **ไม่ต้องตกใจ** ถ้า `<h1>` ตัวเล็ก — มันถูกออกแบบมาแบบนั้น
+2. **ใส่ class ทุกอย่าง** — Tailwind ต้องการให้คุณควบคุม style ทุกอย่างเอง
+3. **ดู browser devtools** — จะเห็นว่า Preflight normalize อะไรบ้าง

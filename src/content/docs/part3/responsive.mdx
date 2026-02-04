@@ -1,0 +1,124 @@
+---
+title: Responsive Design
+description: การใช้ breakpoints สำหรับ responsive layouts
+---
+
+# Responsive Design
+
+## Breakpoints
+
+Tailwind ใช้ **mobile-first** approach:
+
+| Prefix | Min-width | Target        |
+| ------ | --------- | ------------- |
+| (none) | 0px       | Mobile        |
+| `sm:`  | 640px     | Large phones  |
+| `md:`  | 768px     | Tablets       |
+| `lg:`  | 1024px    | Laptops       |
+| `xl:`  | 1280px    | Desktops      |
+| `2xl:` | 1536px    | Large screens |
+
+---
+
+## Mobile-First Approach
+
+เขียน styles สำหรับ mobile ก่อน แล้วเพิ่ม breakpoints:
+
+```html
+<!-- เริ่มจาก mobile: 1 column -->
+<!-- md ขึ้นไป: 2 columns -->
+<!-- lg ขึ้นไป: 4 columns -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">...</div>
+```
+
+---
+
+## ตัวอย่างการใช้งาน
+
+### Responsive Text
+
+```html
+<h1 class="text-2xl md:text-4xl lg:text-6xl font-bold">Responsive Heading</h1>
+```
+
+### Responsive Spacing
+
+```html
+<div class="p-4 md:p-8 lg:p-12">Padding increases on larger screens</div>
+```
+
+### Responsive Layout
+
+```html
+<div class="flex flex-col md:flex-row gap-4">
+  <aside class="w-full md:w-64">Sidebar</aside>
+  <main class="flex-1">Content</main>
+</div>
+```
+
+### Hide/Show Elements
+
+```html
+<!-- ซ่อนบน mobile, แสดงบน md ขึ้นไป -->
+<nav class="hidden md:flex">Desktop nav</nav>
+
+<!-- แสดงบน mobile, ซ่อนบน md ขึ้นไป -->
+<button class="md:hidden">☰ Mobile menu</button>
+```
+
+---
+
+## Max-Width Breakpoints
+
+ใช้ `max-*` สำหรับ desktop-first (ไม่แนะนำ):
+
+```html
+<div class="max-md:hidden">Hidden on screens smaller than md (768px)</div>
+```
+
+---
+
+## Container
+
+```html
+<div class="container mx-auto px-4">
+  Centered container with responsive max-width
+</div>
+```
+
+| Screen | Max-width |
+| ------ | --------- |
+| sm     | 640px     |
+| md     | 768px     |
+| lg     | 1024px    |
+| xl     | 1280px    |
+| 2xl    | 1536px    |
+
+---
+
+## Custom Breakpoints (v4)
+
+```css
+@theme {
+  /* เพิ่ม breakpoint ใหม่ */
+  --breakpoint-xs: 480px;
+  --breakpoint-3xl: 1920px;
+}
+```
+
+ใช้งาน:
+
+```html
+<div class="xs:text-sm 3xl:text-2xl">Custom breakpoints</div>
+```
+
+---
+
+## Best Practices
+
+| Do ✅                    | Don't ❌                      |
+| ------------------------ | ----------------------------- |
+| Design mobile-first      | Design desktop-first แล้วซ่อน |
+| ใช้ relative units (rem) | ใช้ fixed pixels ทุกที่       |
+| Test บนหลาย devices      | Test แค่บน desktop            |
+| ใช้ `container`          | กำหนด max-width เอง           |

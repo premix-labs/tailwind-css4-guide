@@ -1,0 +1,141 @@
+---
+title: Accessibility
+description: การใช้ sr-only, aria modifiers และ screen reader utilities
+---
+
+# Accessibility
+
+การทำให้เว็บไซต์เข้าถึงได้โดยทุกคน
+
+## Screen Reader Only
+
+ซ่อนจากสายตาแต่ยังอ่านได้ด้วย screen reader:
+
+```html
+<button>
+  <svg><!-- close icon --></svg>
+  <span class="sr-only">Close menu</span>
+</button>
+
+<!-- แสดงเมื่อ focus (สำหรับ skip links) -->
+<a href="#main" class="sr-only focus:not-sr-only"> Skip to main content </a>
+```
+
+---
+
+## ARIA Modifiers (v4!)
+
+ใช้ styling ตาม ARIA attributes:
+
+```html
+<!-- aria-expanded -->
+<button aria-expanded="true" class="aria-expanded:bg-blue-500">Menu</button>
+
+<!-- aria-selected -->
+<div
+  role="tab"
+  aria-selected="true"
+  class="aria-selected:border-b-2 aria-selected:border-blue-500"
+>
+  Tab 1
+</div>
+
+<!-- aria-disabled -->
+<button aria-disabled="true" class="aria-disabled:opacity-50">Disabled</button>
+
+<!-- aria-checked (สำหรับ checkbox custom) -->
+<div role="checkbox" aria-checked="true" class="aria-checked:bg-blue-500">
+  ✓
+</div>
+```
+
+### ARIA Modifiers ที่มี
+
+| Modifier         | ARIA Attribute         |
+| ---------------- | ---------------------- |
+| `aria-checked:`  | `aria-checked="true"`  |
+| `aria-disabled:` | `aria-disabled="true"` |
+| `aria-expanded:` | `aria-expanded="true"` |
+| `aria-hidden:`   | `aria-hidden="true"`   |
+| `aria-pressed:`  | `aria-pressed="true"`  |
+| `aria-selected:` | `aria-selected="true"` |
+| `aria-required:` | `aria-required="true"` |
+
+---
+
+## Focus Visible
+
+แสดง focus ring เฉพาะ keyboard navigation:
+
+```html
+<button
+  class="focus:outline-none focus-visible:ring-2 
+               focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+>
+  Keyboard accessible
+</button>
+```
+
+> **Note:** `focus-visible` แสดงเฉพาะเมื่อ focus ด้วย keyboard ไม่ใช่ mouse click
+
+---
+
+## Forced Colors
+
+สำหรับ Windows High Contrast Mode:
+
+```html
+<div class="forced-color-adjust-none">
+  Keep custom colors in high contrast mode
+</div>
+
+<div class="forced-color-adjust-auto">Let system adjust colors (default)</div>
+```
+
+---
+
+## Reduced Motion
+
+รองรับ users ที่ต้องการลด animation:
+
+```html
+<div class="animate-bounce motion-reduce:animate-none">
+  Bouncing (disabled if user prefers reduced motion)
+</div>
+
+<!-- หรือใช้ motion-safe -->
+<div class="motion-safe:animate-pulse">Only animate if user allows motion</div>
+```
+
+---
+
+## Best Practices
+
+| Do ✅                                   | Don't ❌                    |
+| --------------------------------------- | --------------------------- |
+| ใช้ semantic HTML (`<button>`, `<nav>`) | ใช้ `<div>` สำหรับทุกอย่าง  |
+| เพิ่ม `sr-only` ให้ icon-only buttons   | ปล่อยให้ button ไม่มี label |
+| ใช้ `focus-visible` สำหรับ focus states | ลบ focus outline ทั้งหมด    |
+| รองรับ `motion-reduce`                  | บังคับ animation ทุกคน      |
+| Test ด้วย keyboard                      | Test แค่ mouse              |
+
+---
+
+## ตัวอย่างปุ่มที่ Accessible
+
+```html
+<button
+  aria-label="Add to cart"
+  class="
+    bg-blue-500 text-white px-4 py-2 rounded-lg
+    hover:bg-blue-600
+    focus:outline-none focus-visible:ring-2 
+    focus-visible:ring-blue-500 focus-visible:ring-offset-2
+    disabled:opacity-50 disabled:cursor-not-allowed
+    aria-disabled:opacity-50
+  "
+>
+  <svg class="w-5 h-5" aria-hidden="true"><!-- cart icon --></svg>
+  <span class="sr-only">Add to cart</span>
+</button>
+```

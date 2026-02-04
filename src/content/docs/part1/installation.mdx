@@ -1,0 +1,133 @@
+---
+title: Installation
+description: วิธีติดตั้ง Tailwind CSS 4 ผ่าน Vite, PostCSS และ CLI
+---
+
+# Installation
+
+## แนวคิด
+
+Tailwind CSS 4 ใช้ approach ใหม่ที่เรียกว่า **CSS-first configuration** — ไม่ต้องมี `tailwind.config.js` อีกต่อไป ทุกอย่างทำใน CSS!
+
+> **ทำไมเปลี่ยน?** การ config ใน CSS ทำให้:
+>
+> - ไม่ต้อง restart dev server เมื่อเปลี่ยน config
+> - ใช้ CSS Variables ได้ตรงๆ
+> - IDE support ดีขึ้น
+
+---
+
+## วิธีติดตั้ง
+
+### 1. ใช้ Vite (แนะนำ)
+
+```bash
+npm install tailwindcss @tailwindcss/vite
+```
+
+จากนั้นเพิ่มใน `vite.config.js`:
+
+```js
+import tailwindcss from "@tailwindcss/vite";
+
+export default {
+  plugins: [tailwindcss()],
+};
+```
+
+### 2. ใช้ PostCSS
+
+```bash
+npm install tailwindcss @tailwindcss/postcss postcss
+```
+
+สร้างไฟล์ `postcss.config.js`:
+
+```js
+export default {
+  plugins: {
+    "@tailwindcss/postcss": {},
+  },
+};
+```
+
+### 3. ใช้ Tailwind CLI
+
+```bash
+npm install tailwindcss @tailwindcss/cli
+```
+
+รัน build:
+
+```bash
+npx @tailwindcss/cli -i input.css -o output.css
+```
+
+---
+
+## Import Tailwind
+
+หลังติดตั้งแล้ว ให้ import Tailwind ในไฟล์ CSS หลัก:
+
+```css
+@import "tailwindcss";
+```
+
+---
+
+## ตัวอย่าง Project Setup
+
+### Vite + React
+
+```bash
+npm create vite@latest my-app -- --template react
+cd my-app
+npm install tailwindcss @tailwindcss/vite
+```
+
+```js
+// vite.config.js
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import tailwindcss from "@tailwindcss/vite";
+
+export default defineConfig({
+  plugins: [react(), tailwindcss()],
+});
+```
+
+```css
+/* src/index.css */
+@import "tailwindcss";
+```
+
+---
+
+## เปรียบเทียบวิธีติดตั้ง
+
+| วิธี        | เหมาะกับ                    | ข้อดี                      |
+| ----------- | --------------------------- | -------------------------- |
+| **Vite**    | Projects ใหม่               | เร็วที่สุด, Hot reload ดี  |
+| **PostCSS** | Projects ที่มี bundler อื่น | ใช้กับ webpack, parcel ได้ |
+| **CLI**     | Static sites, prototypes    | ไม่ต้องมี build tool       |
+
+---
+
+## Tips
+
+1. **ใช้ Vite ถ้าเริ่มใหม่** — performance ดีที่สุด
+2. **ไม่ต้องสร้าง `tailwind.config.js`** — v4 ใช้ `@theme` ใน CSS แทน
+3. **ตรวจสอบ version** — ใช้ `npm list tailwindcss` ดู version
+4. **Error CSS not found?** — ตรวจว่า import CSS file ใน main entry (index.html หรือ main.jsx)
+
+---
+
+## Troubleshooting
+
+| ปัญหา                 | วิธีแก้                                     |
+| --------------------- | ------------------------------------------- |
+| Classes ไม่ทำงาน      | ตรวจว่า import `@import "tailwindcss"` แล้ว |
+| CSS ไม่ update        | ลอง restart dev server                      |
+| IntelliSense ไม่ทำงาน | ติดตั้ง Tailwind CSS IntelliSense extension |
+
+> **หมายเหตุ:** ถ้า Tailwind CSS 4 ยังไม่ stable ให้ใช้ `tailwindcss@next` แทน

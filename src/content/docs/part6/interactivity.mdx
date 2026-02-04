@@ -1,0 +1,245 @@
+---
+title: Interactivity
+description: การใช้ cursor, scroll, resize, touch และ user-select
+---
+
+# Interactivity
+
+## แนวคิด
+
+Interactivity utilities ควบคุมวิธีที่ users **โต้ตอบ** กับ elements:
+
+- **Cursor** — ลักษณะ cursor ที่แสดง
+- **Scroll** — พฤติกรรมการ scroll
+- **Touch** — gestures บน touch devices
+- **Select** — การเลือกข้อความ
+
+> **Tip:** Interactivity ช่วยให้ UX ดีขึ้นโดยให้ feedback ที่เหมาะสมกับ context
+
+---
+
+## Cursor
+
+```html
+<div class="cursor-auto">Auto (default)</div>
+<div class="cursor-default">Default arrow</div>
+<div class="cursor-pointer">Pointer hand</div>
+<div class="cursor-wait">Loading spinner</div>
+<div class="cursor-text">Text selection</div>
+<div class="cursor-move">Move cross</div>
+<div class="cursor-not-allowed">Not allowed</div>
+<div class="cursor-grab active:cursor-grabbing">Draggable</div>
+<div class="cursor-zoom-in">Zoom in</div>
+<div class="cursor-zoom-out">Zoom out</div>
+```
+
+| Class                | Cursor             |
+| -------------------- | ------------------ |
+| `cursor-auto`        | ตาม context        |
+| `cursor-default`     | ลูกศร              |
+| `cursor-pointer`     | มือชี้ (clickable) |
+| `cursor-wait`        | loading            |
+| `cursor-text`        | I-beam             |
+| `cursor-move`        | กากบาท (draggable) |
+| `cursor-not-allowed` | ห้าม               |
+| `cursor-grab`        | มือเปิด            |
+| `cursor-grabbing`    | มือหยิบ            |
+
+---
+
+## Scroll Behavior
+
+```html
+<html class="scroll-smooth">
+  <!-- Smooth scroll for all anchor links -->
+</html>
+```
+
+```css
+/* เทียบเท่า */
+scroll-behavior: smooth;
+```
+
+---
+
+## Scroll Snap
+
+สร้าง carousel/slider ที่ snap เข้าที่:
+
+```html
+<div class="snap-x snap-mandatory overflow-x-auto flex">
+  <div class="snap-start shrink-0 w-80">Slide 1</div>
+  <div class="snap-start shrink-0 w-80">Slide 2</div>
+  <div class="snap-start shrink-0 w-80">Slide 3</div>
+</div>
+```
+
+### Container
+
+| Class            | Effect           |
+| ---------------- | ---------------- |
+| `snap-x`         | snap แนวนอน      |
+| `snap-y`         | snap แนวตั้ง     |
+| `snap-mandatory` | ต้อง snap เสมอ   |
+| `snap-proximity` | snap เมื่อใกล้พอ |
+
+### Items
+
+| Class             | Snap position |
+| ----------------- | ------------- |
+| `snap-start`      | ชิดเริ่มต้น   |
+| `snap-center`     | กึ่งกลาง      |
+| `snap-end`        | ชิดท้าย       |
+| `snap-align-none` | ไม่ snap      |
+
+---
+
+## Scroll Margin & Padding
+
+```html
+<!-- offset เมื่อ scroll ไปหา anchor -->
+<section id="about" class="scroll-mt-16">
+  <!-- เผื่อที่ว่างสำหรับ fixed header -->
+</section>
+```
+
+---
+
+## User Select
+
+```html
+<p class="select-none">ไม่สามารถ select ได้</p>
+<p class="select-text">select ได้ปกติ (default)</p>
+<p class="select-all">คลิกเดียว select ทั้งหมด</p>
+<p class="select-auto">ตาม browser default</p>
+```
+
+---
+
+## Pointer Events
+
+```html
+<div class="pointer-events-none">คลิกทะลุไปข้างหลัง</div>
+<div class="pointer-events-auto">คลิกได้ปกติ</div>
+```
+
+ใช้กับ overlay ที่ต้องการให้คลิกทะลุ:
+
+```html
+<div class="absolute inset-0 pointer-events-none">
+  <div class="pointer-events-auto absolute bottom-4 right-4">
+    <!-- Only this button is clickable -->
+    <button>Click me</button>
+  </div>
+</div>
+```
+
+---
+
+## Resize
+
+```html
+<textarea class="resize-none">ปรับขนาดไม่ได้</textarea>
+<textarea class="resize-y">ปรับแนวตั้งได้</textarea>
+<textarea class="resize-x">ปรับแนวนอนได้</textarea>
+<textarea class="resize">ปรับได้ทั้งสองทาง</textarea>
+```
+
+---
+
+## Touch Action
+
+สำหรับ touch devices:
+
+```html
+<div class="touch-auto">ปกติ</div>
+<div class="touch-none">ปิด touch gestures</div>
+<div class="touch-pan-x">pan แนวนอนเท่านั้น</div>
+<div class="touch-pan-y">pan แนวตั้งเท่านั้น</div>
+<div class="touch-pinch-zoom">pinch zoom เท่านั้น</div>
+<div class="touch-manipulation">ไม่มี double-tap zoom</div>
+```
+
+---
+
+## Appearance
+
+ลบ default styling ของ browser:
+
+```html
+<select class="appearance-none">
+  <!-- ใช้ custom styling -->
+</select>
+
+<input type="number" class="appearance-none" />
+```
+
+---
+
+## Caret Color
+
+สีของ cursor ใน input:
+
+```html
+<input class="caret-blue-500" />
+<input class="caret-pink-500" />
+<input class="caret-transparent" />
+```
+
+---
+
+## Accent Color
+
+สีของ checkbox, radio, range:
+
+```html
+<input type="checkbox" class="accent-pink-500" />
+<input type="radio" class="accent-blue-500" />
+<input type="range" class="accent-green-500" />
+```
+
+---
+
+## ตัวอย่างการใช้งาน
+
+### Custom Checkbox
+
+```html
+<label class="flex items-center gap-2 cursor-pointer select-none">
+  <input type="checkbox" class="accent-blue-500 w-5 h-5" />
+  <span>Remember me</span>
+</label>
+```
+
+### Horizontal Scroll Gallery
+
+```html
+<div
+  class="snap-x snap-mandatory overflow-x-auto flex gap-4 pb-4
+            scrollbar-hide"
+>
+  <div class="snap-center shrink-0 w-72 h-48 bg-gray-200 rounded-lg" />
+  <div class="snap-center shrink-0 w-72 h-48 bg-gray-200 rounded-lg" />
+  <div class="snap-center shrink-0 w-72 h-48 bg-gray-200 rounded-lg" />
+</div>
+```
+
+---
+
+## Best Practices
+
+| Do ✅                                       | Don't ❌                               |
+| ------------------------------------------- | -------------------------------------- |
+| ใช้ `cursor-pointer` กับ clickable elements | ลืม cursor บน custom buttons           |
+| ใช้ `scroll-smooth` กับ `html`              | ใส่บนทุก element                       |
+| ใช้ `select-none` กับ buttons/icons         | ใช้กับ text content                    |
+| ใช้ `scroll-mt-16` เมื่อมี fixed header     | ลืม offset แล้ว content โดน header บัง |
+
+---
+
+## Tips
+
+1. **`scroll-smooth`:** ใส่ที่ `<html>` เดียว ไม่ต้องใส่ที่อื่น
+2. **`select-all`:** เหมาะสำหรับ code snippets, API keys
+3. **`pointer-events-none`:** ใช้กับ overlay แต่จำไว้ว่าลูกใช้ `pointer-events-auto` คืนได้
+4. **`touch-manipulation`:** ลบ 300ms delay บน mobile โดยไม่ปิด gestures อื่น

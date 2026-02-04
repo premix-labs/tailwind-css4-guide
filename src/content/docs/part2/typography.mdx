@@ -1,0 +1,148 @@
+---
+title: Typography
+description: การจัดการ font, text และ spacing ของตัวอักษร
+---
+
+# Typography
+
+## แนวคิด
+
+Typography คือ foundation ของ UI — ข้อความที่อ่านง่ายทำให้ users อยู่กับเว็บนานขึ้น
+
+> **Key Principle:** ใช้ scale ที่ consistent เช่น `text-sm`, `text-base`, `text-lg` ไม่ใช่ค่าสุ่ม
+
+---
+
+## Font Size
+
+| Class       | Size     | Line Height | Use Case     |
+| ----------- | -------- | ----------- | ------------ |
+| `text-xs`   | 0.75rem  | 1rem        | Captions     |
+| `text-sm`   | 0.875rem | 1.25rem     | Body small   |
+| `text-base` | 1rem     | 1.5rem      | Body default |
+| `text-lg`   | 1.125rem | 1.75rem     | Lead text    |
+| `text-xl`   | 1.25rem  | 1.75rem     | Heading 4    |
+| `text-2xl`  | 1.5rem   | 2rem        | Heading 3    |
+| `text-3xl`  | 1.875rem | 2.25rem     | Heading 2    |
+| `text-4xl`  | 2.25rem  | 2.5rem      | Heading 1    |
+
+---
+
+## Font Weight
+
+| Class           | Weight | Use Case       |
+| --------------- | ------ | -------------- |
+| `font-thin`     | 100    | Display only   |
+| `font-light`    | 300    | Large headings |
+| `font-normal`   | 400    | Body text      |
+| `font-medium`   | 500    | Buttons        |
+| `font-semibold` | 600    | Subheadings    |
+| `font-bold`     | 700    | Headings       |
+| `font-black`    | 900    | Hero titles    |
+
+---
+
+## Text Color
+
+```html
+<p class="text-gray-600">Muted text</p>
+<p class="text-blue-500">Primary text</p>
+<p class="text-red-500/50">50% opacity</p>
+```
+
+---
+
+## Line Height & Letter Spacing
+
+```html
+<p class="leading-relaxed tracking-wide">
+  Easy to read paragraph with relaxed line height
+</p>
+```
+
+| Class             | CSS                      | Use Case          |
+| ----------------- | ------------------------ | ----------------- |
+| `leading-tight`   | line-height: 1.25        | Headings          |
+| `leading-normal`  | line-height: 1.5         | Body              |
+| `leading-relaxed` | line-height: 1.625       | Long form content |
+| `tracking-tight`  | letter-spacing: -0.025em | Large headings    |
+| `tracking-wide`   | letter-spacing: 0.025em  | Uppercase labels  |
+
+---
+
+## Text Align & Decoration
+
+```html
+<p class="text-center underline">Centered and underlined</p>
+<p class="text-right line-through">Right aligned strikethrough</p>
+```
+
+---
+
+## Line Clamp
+
+```html
+<!-- ตัดที่ 3 บรรทัด -->
+<p class="line-clamp-3">Very long text that will be truncated...</p>
+```
+
+---
+
+## Text Balance (v4 ใหม่!)
+
+```html
+<!-- หัวข้อที่จัดระยะห่างอัตโนมัติ -->
+<h1 class="text-balance">This is a long headline that will be balanced</h1>
+```
+
+> **Note:** `text-balance` ช่วยให้หัวข้อยาวๆ ดูสวยงามขึ้นโดยจัดสมดุลความยาวแต่ละบรรทัด
+
+---
+
+## ตัวอย่าง Practical
+
+### Article Header
+
+```html
+<article>
+  <p class="text-sm font-medium text-blue-500 uppercase tracking-wide">
+    Category
+  </p>
+  <h1 class="mt-1 text-3xl font-bold text-gray-900 text-balance">
+    This is an Amazing Article Title That Spans Multiple Lines
+  </h1>
+  <p class="mt-2 text-gray-500">Published on <time>Jan 1, 2024</time></p>
+</article>
+```
+
+### Card Description
+
+```html
+<div class="p-4">
+  <h3 class="font-semibold text-lg">Card Title</h3>
+  <p class="mt-2 text-gray-600 text-sm line-clamp-2">
+    This is a description that might be very long but will be truncated to 2
+    lines maximum.
+  </p>
+</div>
+```
+
+---
+
+## Best Practices
+
+| Do ✅                              | Don't ❌                 |
+| ---------------------------------- | ------------------------ |
+| ใช้ `text-balance` กับ headings    | ใช้กับ body text (slow)  |
+| ใช้ scale ที่ consistent           | ผสมขนาดแบบ random        |
+| ใช้ `tracking-tight` กับหัวข้อใหญ่ | ใช้ tracking กับทุก text |
+| กำหนด `leading-*` explicit         | พึ่ง default เสมอ        |
+
+---
+
+## Tips
+
+1. **Responsive Typography:** ใช้ `text-lg md:text-xl lg:text-2xl` สำหรับ headings
+2. **Contrast:** text-gray-600 บน white bg = readable, text-gray-400 = too light
+3. **Font Pairing:** ผสม font ได้สูงสุด 2 ตัว (heading + body)
+4. **Line Length:** ควรมี max-width ~65-75 characters สำหรับ readability

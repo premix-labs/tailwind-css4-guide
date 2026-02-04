@@ -1,0 +1,74 @@
+---
+title: Dark Mode
+description: การใช้งาน dark mode ใน Tailwind CSS 4
+---
+
+# Dark Mode
+
+## การใช้งานพื้นฐาน
+
+```html
+<div class="bg-white dark:bg-gray-900">
+  <p class="text-black dark:text-white">Auto dark mode</p>
+</div>
+```
+
+## วิธีการทำงาน
+
+Tailwind CSS 4 ใช้ `prefers-color-scheme` media query โดย default:
+
+```css
+/* CSS ที่ถูก generate */
+.dark\:bg-gray-900 {
+  @media (prefers-color-scheme: dark) {
+    background-color: var(--color-gray-900);
+  }
+}
+```
+
+## การ Toggle ด้วย Class
+
+ถ้าต้องการควบคุม dark mode ด้วย JavaScript:
+
+```css
+/* ใน CSS */
+@import "tailwindcss";
+
+@variant dark (&:where(.dark, .dark *));
+```
+
+```html
+<!-- Toggle class บน html หรือ body -->
+<html class="dark">
+  <body class="bg-white dark:bg-gray-900">
+    ...
+  </body>
+</html>
+```
+
+## ตัวอย่าง Card
+
+```html
+<div
+  class="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 
+            border border-gray-200 dark:border-gray-700"
+>
+  <h2 class="text-gray-900 dark:text-white font-bold">Title</h2>
+  <p class="text-gray-600 dark:text-gray-300 mt-2">Description</p>
+  <button
+    class="mt-4 bg-blue-500 hover:bg-blue-600 
+                 dark:bg-blue-600 dark:hover:bg-blue-700 
+                 text-white px-4 py-2 rounded"
+  >
+    Action
+  </button>
+</div>
+```
+
+## Best Practices
+
+| Do ✅                               | Don't ❌                   |
+| ----------------------------------- | -------------------------- |
+| ใช้ semantic colors เช่น `gray-900` | ใช้ `black` สำหรับ dark bg |
+| เพิ่ม border ใน dark mode           | ใช้ shadow อย่างเดียว      |
+| Test บนทั้ง light และ dark          | ลืม test dark mode         |
