@@ -5,6 +5,10 @@ import starlight from '@astrojs/starlight';
 export default defineConfig({
 	site: 'https://premix-labs.github.io',
 	base: '/tailwind-css4-guide',
+	trailingSlash: 'always',
+	build: {
+		format: 'directory'
+	},
 	integrations: [
 		starlight({
 			title: 'Tailwind CSS 4 Guide',
